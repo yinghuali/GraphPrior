@@ -7,8 +7,24 @@
 print(data.num_nodes)      # 2708
 print(data.num_edges)       # 13264
 print(data.keys)           # ['x', 'test_mask', 'y', 'adj_t', 'train_mask', 'val_mask']
-print(data['x'].shape)     # torch.Size([2708, 1433])
-print(data['test_mask'].shape)  # torch.Size([2708])
-print(data['y'].shape)    # torch.Size([2708])
-print(data['train_mask'].shape)   # torch.Size([2708])
-print(data['val_mask'].shape)   # torch.Size([2708])
+print(data.x.shape)     # torch.Size([2708, 1433])
+print(data.test_mask.shape)  # torch.Size([2708])
+print(data.y.shape)    # torch.Size([2708])
+print(data.train_mask.shape)   # torch.Size([2708])
+print(data.val_mask.shape)   # torch.Size([2708])
+
+x_np.pkl  (2708, 1433)
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+
+edge_index_np.pkl   (2, 10556)
+[[   0    0    0 ... 2707 2707 2707]
+ [ 633 1862 2582 ...  598 1473 2706]]
+
+y_np.pkl  (2708,)
+[3 4 4 ... 3 3 3]
