@@ -28,21 +28,25 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = GCN().to(device)
 data = dataset[0].to(device)
 
+print(dataset.num_node_features)
 
-print(data.x.numpy().shape)
-print(data.edge_index.numpy().shape)
-print(data.y.numpy().shape)
-
-pickle.dump(data.x.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl', 'wb'), protocol=4)
-pickle.dump(data.edge_index.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl', 'wb'), protocol=4)
-pickle.dump(data.y.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl', 'wb'), protocol=4)
-
-print('=========')
-print(data.x.numpy())
-print('=========')
-print(data.edge_index.numpy())
-print('=========')
-print(data.y.numpy())
+# print(data.x.numpy().shape)
+# print(data.edge_index.numpy().shape)
+# print(data.y.numpy().shape)
+#
+# pickle.dump(data.x.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl', 'wb'), protocol=4)
+# pickle.dump(data.edge_index.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl', 'wb'), protocol=4)
+# pickle.dump(data.y.numpy(), open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl', 'wb'), protocol=4)
+#
+# print('=========')
+# print(data.x.numpy())
+# print('=========')
+# print(data.edge_index.numpy())
+# print('=========')
+# print(data.y.numpy())
+# print(data.train_mask)
+#
+# print(dataset.num_node_features)
 
 # optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 #
