@@ -28,6 +28,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = GCN().to(device)
 data = dataset[0].to(device)
 
+
 print(data.x.numpy().shape)
 print(data.edge_index.numpy().shape)
 print(data.y.numpy().shape)

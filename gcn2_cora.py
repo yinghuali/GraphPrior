@@ -67,7 +67,6 @@ data = data.to(device)
 print(data.adj_t)
 print(data.adj_t.size)
 
-
 optimizer = torch.optim.Adam([
     dict(params=model.convs.parameters(), weight_decay=0.01),
     dict(params=model.lins.parameters(), weight_decay=5e-4)
