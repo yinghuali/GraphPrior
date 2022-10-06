@@ -134,3 +134,6 @@ dmypy.json
 build/
 dist/
 logs/*.log
+
+tools/SDCN/data/*
+.DS_Store
