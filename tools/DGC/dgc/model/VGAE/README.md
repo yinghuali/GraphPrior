@@ -1,3 +1,0 @@
-## Variational Graph Auto Encoder
-
-
