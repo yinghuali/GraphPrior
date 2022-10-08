@@ -28,3 +28,29 @@ edge_index_np.pkl   (2, 10556)
 
 y_np.pkl  (2708,)
 [3 4 4 ... 3 3 3]
+
+
+# dblp
+adj = np.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/tools/DCRN/dataset/dblp/dblp_adj.npy')
+feat = np.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/tools/DCRN/dataset/dblp/dblp_feat.npy')
+label = np.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/tools/DCRN/dataset/dblp/dblp_label.npy')
+
+adj.shape (4057, 4057)
+array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]], dtype=float32)
+feat.shape (4057, 334)
+array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 1., 0., 0.]])
+label.shape (4057,)
+array([1, 3, 0, ..., 3, 3, 2], dtype=int32)
+

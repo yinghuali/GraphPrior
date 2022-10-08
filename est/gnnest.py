@@ -10,7 +10,6 @@ from torch_geometric.datasets import Planetoid
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
-epochs = 50
 
 x = pickle.load(open(path_x_np, 'rb'))
 edge_index = pickle.load(open(path_edge_index, 'rb'))
@@ -26,8 +25,6 @@ edge_index = torch.from_numpy(edge_index)
 y = torch.from_numpy(y)
 train_y = torch.from_numpy(train_y)
 test_y = torch.from_numpy(test_y)
-
-
 
 
 class GCN(torch.nn.Module):
@@ -64,14 +61,9 @@ test_acc = get_acc(pred, y, test_idx)
 print(train_acc)
 print(test_acc)
 
-pred_test = pred[test_idx]
-y_test = y[test_idx]
 
-def get_test_group_pro(n_group, pred_test, select_n):
-    res_idx = []
-    pro_list = []
-    for i in range(n_group):
-        res_idx.append(np.random.randint(select_n, len(pred_test)))
+
+
 
 
 

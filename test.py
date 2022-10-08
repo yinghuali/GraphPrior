@@ -1,13 +1,11 @@
-import numpy as np
 
-feat = np.load('/Users/yinghua.li/Downloads/DGC/dataset/dblp/dblp_feat.npy', allow_pickle=True)
-label = np.load('/Users/yinghua.li/Downloads/DGC/dataset/dblp/dblp_label.npy', allow_pickle=True)
-adj = np.load('/Users/yinghua.li/Downloads/DGC/dataset/dblp/dblp_adj.npy', allow_pickle=True)
+import torch
+from torch_cluster import graclus_cluster
 
+row = torch.tensor([0, 1, 1, 2])
+col = torch.tensor([1, 0, 2, 1])
+weight = torch.tensor([1., 1., 1., 1.])  # Optional edge weights.
 
-print(feat.shape)
-print(label.shape)
-print(adj.shape)
+cluster = graclus_cluster(row, col, weight)
 
-print(adj[5])
-print(sum(adj[5]))
+print(cluster)
