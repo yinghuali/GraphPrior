@@ -4,10 +4,6 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-edge_index_np = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl', 'rb'))
-x = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl', 'rb'))
-y = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl', 'rb'))
-node_np = np.array(list(set(edge_index_np[0])))
 
 # input
 # array([[   0,    0,    0, ..., 2707, 2707, 2707],
@@ -133,11 +129,16 @@ def get_networks_feature(edge_index_np, node_np):
     return feature_list
 
 
-def get_all_network_feature():
+def get_all_network_feature(edge_index_np, node_np):
 
     # feature_list = [average_neighbor_degree_list, degree_centrality_list, eigenvector_centrality_list, katz_centrality_list, \
     # closeness_centrality_list, betweenness_centrality_list, subgraph_centrality_list, harmonic_centrality_list, \
     # triangles_list, isolate_list, pagerank_list, hits_list1, hits_list2, one_layer_count, two_layer_count, distance_degree_centrality]
+
+    # edge_index_np = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl', 'rb'))
+    # x = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl', 'rb'))
+    # y = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl', 'rb'))
+    # node_np = np.array(list(set(edge_index_np[0])))
 
     one_layer_count = get_one_layer_count(edge_index_np, node_np)
 
