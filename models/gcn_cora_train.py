@@ -10,6 +10,7 @@ path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
 epochs = 50
+save_model_name = 'cora_gcn.pt'
 
 x = pickle.load(open(path_x_np, 'rb'))
 edge_index = pickle.load(open(path_edge_index, 'rb'))
@@ -62,10 +63,10 @@ def train(x, edge_index, y):
         optimizer.step()
 
 
-    torch.save(model.state_dict(), 'model.pt')
+    torch.save(model.state_dict(), save_model_name)
 
     # model = GCN()
-    # model.load_state_dict(torch.load('model.pt'))
+    # model.load_state_dict(torch.load('cora_gcn.pt'))
 
     model.eval()
     pred = model(x, edge_index).argmax(dim=1)
@@ -79,14 +80,14 @@ def train(x, edge_index, y):
     print('test:', acc)
 
     pre = model(x, edge_index)
-    pickle.dump(pre.detach().numpy(), open('pre_np_gcn_cora.pkl', 'wb'), protocol=4)
+    pickle.dump(pre.detach().numpy(), open('pre_np_cora_gcn.pkl', 'wb'), protocol=4)
 
 
 if __name__ == '__main__':
     train(x, edge_index, y)
 
-# train: 0.9498680738786279
-# test: 0.8892988929889298
+# train: 0.9424802110817943
+# test: 0.8769987699876999
 
 
 

@@ -25,7 +25,5 @@ def get_uncertainty_feature(prediction):
     df['margin'] = Margin_score(prediction)
     df['deepgini'] = DeepGini_score(prediction)
     df['variance'] = Variance_score(prediction)
-    X_uncertainty = df.to_numpy()
-    X_uncertainty = MinMaxScaler().fit_transform(X_uncertainty)
-    return X_uncertainty
+    return df
 

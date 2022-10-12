@@ -50,7 +50,7 @@ def get_acc(pred, y, idx_np):
 
 
 model = GCN()
-model.load_state_dict(torch.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/models/model.pt'))
+model.load_state_dict(torch.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gcn.pt'))
 
 model.eval()
 pred = model(x, edge_index).argmax(dim=1)
