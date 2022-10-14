@@ -1,3 +1,4 @@
+from gcn import GCN
 import pickle
 import pickle
 import numpy as np
@@ -11,6 +12,7 @@ path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_ind
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
 epochs = 50
 save_model_name = 'cora_gcn.pt'
+save_pre_name = 'pre_np_cora_gcn.pkl'
 
 x = pickle.load(open(path_x_np, 'rb'))
 edge_index = pickle.load(open(path_edge_index, 'rb'))
@@ -28,26 +30,10 @@ train_y = torch.from_numpy(train_y)
 test_y = torch.from_numpy(test_y)
 
 
-class GCN(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.conv1 = GCNConv(num_node_features, 16)
-        self.conv2 = GCNConv(16, num_classes)
-
-    def forward(self, x, edge_index):
-
-        x, edge_index = x, edge_index
-        x = self.conv1(x, edge_index)
-        x = F.relu(x)
-        x = F.dropout(x, training=self.training)
-        x = self.conv2(x, edge_index)
-        return F.log_softmax(x, dim=1)
-
-
 def train(x, edge_index, y):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = GCN().to(device)
+    model = GCN(num_node_features, 16, num_classes).to(device)
     x = x.to(device)
     edge_index = edge_index.to(device)
     y = y.to(device)
@@ -61,7 +47,6 @@ def train(x, edge_index, y):
         loss = F.nll_loss(out[train_idx], y[train_idx])
         loss.backward()
         optimizer.step()
-
 
     torch.save(model.state_dict(), save_model_name)
 
@@ -80,14 +65,12 @@ def train(x, edge_index, y):
     print('test:', acc)
 
     pre = model(x, edge_index)
-    pickle.dump(pre.detach().numpy(), open('pre_np_cora_gcn.pkl', 'wb'), protocol=4)
+    pickle.dump(pre.detach().numpy(), open(save_pre_name, 'wb'), protocol=4)
 
 
 if __name__ == '__main__':
     train(x, edge_index, y)
 
-# train: 0.9424802110817943
-# test: 0.8769987699876999
-
-
+# train: 0.9467018469656993
+# test: 0.8868388683886839
 

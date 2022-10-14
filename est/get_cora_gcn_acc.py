@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from torch_geometric.datasets import Planetoid
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
-path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
+path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/cora_Metattack_edge_index_np.pkl'
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
 
 x = pickle.load(open(path_x_np, 'rb'))
@@ -28,18 +28,17 @@ test_y = torch.from_numpy(test_y)
 
 
 class GCN(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, num_node_features, hidden_channels, num_classes):
         super().__init__()
-        self.conv1 = GCNConv(num_node_features, 16)
-        self.conv2 = GCNConv(16, num_classes)
+        self.conv1 = GCNConv(num_node_features, hidden_channels)
+        self.conv2 = GCNConv(hidden_channels, num_classes)
 
     def forward(self, x, edge_index):
-
-        x, edge_index = x, edge_index
         x = self.conv1(x, edge_index)
         x = F.relu(x)
         x = F.dropout(x, training=self.training)
         x = self.conv2(x, edge_index)
+
         return F.log_softmax(x, dim=1)
 
 
@@ -49,7 +48,7 @@ def get_acc(pred, y, idx_np):
     return acc
 
 
-model = GCN()
+model = GCN(num_node_features, 16, num_classes)
 model.load_state_dict(torch.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gcn.pt'))
 
 model.eval()
@@ -61,9 +60,9 @@ test_acc = get_acc(pred, y, test_idx)
 print(train_acc)
 print(test_acc)
 
-
-
-
+# 原始
+# 0.9467018469656993
+# 0.8868388683886839
 
 
 

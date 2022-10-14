@@ -76,9 +76,14 @@ def get_all_label():
         label2_list += list(labels_np_network_feature)
 
     df['label2'] = label2_list
-    df['label'] = df[['label1', 'label2']].apply(lambda x: str(x[0]) + '_' + str(x[1]), axis=1)
+
+    embedding_np = get_uncertainty_X(path_pre)
+    labels_np_embedding_feature = KMeans(n_clusters=2, random_state=0).fit(embedding_np).labels_
+    df['label3'] = labels_np_embedding_feature
+
+    df['label'] = df[['label1', 'label2', 'label3']].apply(lambda x: str(x[0]) + '_' + str(x[1]) + '_' + str(x[2]), axis=1)
     df['count'] = 1
-    df[['label1', 'label2', 'label', 'node']].to_csv(path_save_label, index=False, sep=',')
+    df[['label1', 'label2', 'label3', 'label', 'node']].to_csv(path_save_label, index=False, sep=',')
 
     print(df.groupby('label').agg({'count': 'sum'}))
 
