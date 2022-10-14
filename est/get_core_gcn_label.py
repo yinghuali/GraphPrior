@@ -13,8 +13,10 @@ path_edge = '../data/cora/edge_index_np.pkl'
 path_x = '../data/cora/x_np.pkl'
 path_y = '../data/cora/y_np.pkl'
 path_embedding = '/Users/yinghua.li/Documents/Pycharm/GNNEST/feature_engineering/cora_node2vec.pkl'
-path_save_label = 'core_gcn_label.csv'
 path_pre = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/pre_np_cora_gcn.pkl'
+type_uncertaity = 'least'
+path_save_label = 'least_core_gcn_label.csv'
+# margin  deepgini  variance  least
 
 
 def get_network_X(edge_index_np, node_np):
@@ -29,6 +31,7 @@ def get_network_X(edge_index_np, node_np):
 
 def get_embedding_X(path_embedding, node_np):
     embedding_dic = pickle.load(open(path_embedding, 'rb'))
+    print(embedding_dic.keys())
     embedding_np = np.array([embedding_dic[str(i)] for i in node_np])
     return embedding_np
 
@@ -48,16 +51,16 @@ def get_all_label():
 
     train_idx, test_idx, train_y, test_y = train_test_split(node_np, y, test_size=0.3, random_state=17)
 
-
     df = get_uncertainty_X(path_pre)
     df['node'] = node_np
     df = df.iloc[test_idx, :].reset_index(drop=True)
+    print(df.head())
 
-    df = df.sort_values(by=['margin']).reset_index(drop=True)
-    n_group = len(df) // 5
+    df = df.sort_values(by=[type_uncertaity]).reset_index(drop=True)
+    n_group = len(df) // 3
     label_list = []
     label = 0
-    for _ in range(4):
+    for _ in range(2):
         label_list += [label]*n_group
         label +=1
     label_list += [label]*(len(df)-len(label_list))
@@ -67,29 +70,29 @@ def get_all_label():
     node_list =list(node_np)
 
     label2_list = []
-    type_label_list = list(range(5))
+    type_label_list = list(range(3))
     for type in type_label_list:
         type_node_list = list(df[df['label1'] == type]['node'])
         type_idx_np = np.array([node_list.index(i) for i in type_node_list])
         X_type = X[type_idx_np]
         labels_np_network_feature = KMeans(n_clusters=2, random_state=0).fit(X_type).labels_
         label2_list += list(labels_np_network_feature)
-
     df['label2'] = label2_list
 
-    embedding_np = get_uncertainty_X(path_pre)
-    labels_np_embedding_feature = KMeans(n_clusters=2, random_state=0).fit(embedding_np).labels_
+    embedding_np = get_embedding_X(path_embedding, node_np)
+    embedding_np_test = embedding_np[test_idx]
+    labels_np_embedding_feature = KMeans(n_clusters=2, random_state=0).fit(embedding_np_test).labels_
     df['label3'] = labels_np_embedding_feature
 
     df['label'] = df[['label1', 'label2', 'label3']].apply(lambda x: str(x[0]) + '_' + str(x[1]) + '_' + str(x[2]), axis=1)
     df['count'] = 1
     df[['label1', 'label2', 'label3', 'label', 'node']].to_csv(path_save_label, index=False, sep=',')
-
     print(df.groupby('label').agg({'count': 'sum'}))
 
 
 if __name__ == '__main__':
     get_all_label()
+
 
 
 

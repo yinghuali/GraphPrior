@@ -20,10 +20,16 @@ def Variance_score(x):
     return var
 
 
+def LeastConfidence_score(x):
+    max_pre = x.max(1)
+    return max_pre
+
+
 def get_uncertainty_feature(prediction):
-    df = pd.DataFrame(columns=['margin', 'deepgini', 'variance'])
+    df = pd.DataFrame(columns=['margin'])
     df['margin'] = Margin_score(prediction)
     df['deepgini'] = DeepGini_score(prediction)
     df['variance'] = Variance_score(prediction)
+    df['least'] = LeastConfidence_score(prediction)
     return df
 

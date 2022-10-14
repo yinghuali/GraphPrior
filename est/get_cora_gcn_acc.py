@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 from torch_geometric.datasets import Planetoid
+from models.gcn import GCN
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/cora_Metattack_edge_index_np.pkl'
@@ -25,21 +26,6 @@ edge_index = torch.from_numpy(edge_index)
 y = torch.from_numpy(y)
 train_y = torch.from_numpy(train_y)
 test_y = torch.from_numpy(test_y)
-
-
-class GCN(torch.nn.Module):
-    def __init__(self, num_node_features, hidden_channels, num_classes):
-        super().__init__()
-        self.conv1 = GCNConv(num_node_features, hidden_channels)
-        self.conv2 = GCNConv(hidden_channels, num_classes)
-
-    def forward(self, x, edge_index):
-        x = self.conv1(x, edge_index)
-        x = F.relu(x)
-        x = F.dropout(x, training=self.training)
-        x = self.conv2(x, edge_index)
-
-        return F.log_softmax(x, dim=1)
 
 
 def get_acc(pred, y, idx_np):
