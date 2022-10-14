@@ -9,6 +9,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from torch_geometric.nn import GCNConv
 from models.gcn import GCN
+from models.gat import GAT
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
@@ -17,12 +18,13 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 path_edge = '../data/cora/edge_index_np.pkl'
 path_x = '../data/cora/x_np.pkl'
 path_y = '../data/cora/y_np.pkl'
-path_save_label_margin = 'margin_core_gcn_label.csv'
-path_save_label_deepgini = 'deepgini_core_gcn_label.csv'
-path_save_label_variance = 'variance_core_gcn_label.csv'
-path_save_label_least = 'least_core_gcn_label.csv'
-path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gcn.pt'
+path_save_label_margin = 'margin_core_gat_label.csv'
+path_save_label_deepgini = 'deepgini_core_gat_label.csv'
+path_save_label_variance = 'variance_core_gat_label.csv'
+path_save_label_least = 'least_core_gat_label.csv'
+path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gat.pt'
 epochs = 500
+model_name = 'gat'
 
 res_save_path = 'res/est.txt'
 
@@ -42,9 +44,17 @@ edge_index = torch.from_numpy(edge_index)
 y = torch.from_numpy(y)
 
 
-model = GCN(num_node_features, 16, num_classes)
-model.load_state_dict(torch.load(path_model))
-model.eval()
+def load_model(model_name):
+    if model_name == 'gcn':
+        model = GCN(num_node_features, 16, num_classes)
+    elif model_name == 'gat':
+        model = GAT(num_node_features, 16, num_classes)
+    model.load_state_dict(torch.load(path_model))
+    model.eval()
+    return model
+
+
+model = load_model(model_name)
 
 
 def write_result(content, file_name):

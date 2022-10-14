@@ -7,9 +7,10 @@ from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 from torch_geometric.datasets import Planetoid
 from models.gcn import GCN
+from models.gat import GAT
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
-path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/cora_Metattack_edge_index_np.pkl'
+path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
 
 x = pickle.load(open(path_x_np, 'rb'))
@@ -34,8 +35,8 @@ def get_acc(pred, y, idx_np):
     return acc
 
 
-model = GCN(num_node_features, 16, num_classes)
-model.load_state_dict(torch.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gcn.pt'))
+model = GAT(num_node_features, 16, num_classes)
+model.load_state_dict(torch.load('/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_gat.pt'))
 
 model.eval()
 pred = model(x, edge_index).argmax(dim=1)
@@ -51,7 +52,8 @@ print(test_acc)
 # 0.8868388683886839
 
 
-
+# train: 0.9810026385224274
+# test: 0.8671586715867159
 
 
 

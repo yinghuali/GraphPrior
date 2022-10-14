@@ -46,7 +46,7 @@ idx_unlabeled = test_idx
 
 adj = sparse.csr_matrix(adj)
 model = Random()
-model.attack(adj, n_perturbations=2000, type='add')
+model.attack(adj, n_perturbations=500, type='add')
 modified_adj = model.modified_adj
 adj = np.array(modified_adj.todense())
 cora_Metattack_edge_index_np = adj_to_edge_index(adj)

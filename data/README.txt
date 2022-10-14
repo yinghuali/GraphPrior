@@ -54,3 +54,11 @@ array([[0., 0., 0., ..., 0., 0., 0.],
 label.shape (4057,)
 array([1, 3, 0, ..., 3, 3, 2], dtype=int32)
 
+
+cora和GCN
+cora和sgc
+cora和gat
+cora和graphsage
+cora和tagcn
+cora和appnp
+
