@@ -62,3 +62,7 @@ cora和graphsage
 cora和tagcn
 cora和appnp
 
+数据集	来源	#图	                                                                  #节点	    #边	   #特征	 #标签(y)
+Cora	“Collective classification in network data,” AI magazine,2008	1	      2708	   5429	   1433	  7
+Citeseer	“Collective classification in network data,” AI magazine,2008	1	  3327	   4732	   3703	  6
+Pubmed	“Collective classification in network data,” AI magazine,2008	1	      19717	   44338   500	  3

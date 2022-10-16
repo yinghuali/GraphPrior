@@ -7,7 +7,7 @@ from GraphEmbedding.ge.models.line import LINE
 from GraphEmbedding.ge.models.sdne import SDNE
 from GraphEmbedding.ge.models.struc2vec import Struc2Vec
 
-# nohup python get_embedding_feature.py -p ../data/cora/edge_index.txt -s cora > 2.log 2>&1 &
+# nohup python get_embedding_feature.py -p ../data/pubmed/edge_index.txt -s pubmed > 2.log 2>&1 &
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--path_edge", type=str, default='')
 ap.add_argument("-s", "--save_name", type=str, default='')

@@ -27,7 +27,12 @@ def get_one_layer_count(edge_index_np, node_np):
     df['count'] = 1
     df = df.groupby('left').agg({'count': 'sum'}).reset_index()
     dic = dict(zip(df['left'], df['count']))
-    one_layer_count = [dic[i] for i in node_np]
+    one_layer_count = []
+    for i in node_np:
+        if i in dic:
+            one_layer_count.append(dic[i])
+        else:
+            one_layer_count.append(0)
     return one_layer_count
 
 
@@ -50,7 +55,12 @@ def get_two_layer_count(edge_index_np, node_np):
         node_count_list.append(tmp_count)
 
     dic = dict(zip(key_list, node_count_list))
-    two_layer_count = [dic[i] for i in node_np]
+    two_layer_count = []
+    for i in node_np:
+        if i in dic:
+            two_layer_count.append(dic[i])
+        else:
+            two_layer_count.append(0)
     return two_layer_count
 
 
@@ -82,46 +92,112 @@ def get_distance_degree_centrality(edge_index_np, node_np):
 
 def get_networks_feature(edge_index_np, node_np):
     G = get_G(edge_index_np)
+
     dic = nx.average_neighbor_degree(G)
-    average_neighbor_degree_list = [dic[i] for i in node_np]
+    average_neighbor_degree_list = []
+    for i in node_np:
+        if i in dic:
+            average_neighbor_degree_list.append(dic[i])
+        else:
+            average_neighbor_degree_list.append(0)
 
     dic = nx.degree_centrality(G)
-    degree_centrality_list = [dic[i] for i in node_np]
+    degree_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            degree_centrality_list.append(dic[i])
+        else:
+            degree_centrality_list.append(0)
 
     dic = nx.eigenvector_centrality_numpy(G)
-    eigenvector_centrality_list = [dic[i] for i in node_np]
+    eigenvector_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            eigenvector_centrality_list.append(dic[i])
+        else:
+            eigenvector_centrality_list.append(0)
 
-    dic = nx.katz_centrality(G, 0.05)
-    katz_centrality_list = [dic[i] for i in node_np]
+    # dic = nx.katz_centrality(G, 0.05)
+    dic = nx.katz_centrality_numpy(G, 0.05)
+    katz_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            katz_centrality_list.append(dic[i])
+        else:
+            katz_centrality_list.append(0)
 
     dic = nx.closeness_centrality(G)
-    closeness_centrality_list = [dic[i] for i in node_np]
+    closeness_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            closeness_centrality_list.append(dic[i])
+        else:
+            closeness_centrality_list.append(0)
 
     dic = nx.betweenness_centrality(G)
-    betweenness_centrality_list = [dic[i] for i in node_np]
+    betweenness_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            betweenness_centrality_list.append(dic[i])
+        else:
+            betweenness_centrality_list.append(0)
 
     dic = nx.subgraph_centrality(G)
-    subgraph_centrality_list = [dic[i] for i in node_np]
+    subgraph_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            subgraph_centrality_list.append(dic[i])
+        else:
+            subgraph_centrality_list.append(0)
 
     dic = nx.harmonic_centrality(G)
-    harmonic_centrality_list = [dic[i] for i in node_np]
+    harmonic_centrality_list = []
+    for i in node_np:
+        if i in dic:
+            harmonic_centrality_list.append(dic[i])
+        else:
+            harmonic_centrality_list.append(0)
 
     dic = nx.triangles(G)
-    triangles_list = [dic[i] for i in node_np]
+    triangles_list = []
+    for i in node_np:
+        if i in dic:
+            triangles_list.append(dic[i])
+        else:
+            triangles_list.append(0)
 
     # 是否是孤立点
     isolate_list = []
     for i in node_np:
-        if nx.is_isolate(G, i):
+        try:
+            if nx.is_isolate(G, i):
+                isolate_list.append(0)
+            else:
+                isolate_list.append(1)
+        except:
             isolate_list.append(0)
-        else:
-            isolate_list.append(1)
+
     dic = nx.pagerank(G)
-    pagerank_list = [dic[i] for i in node_np]
+    pagerank_list = []
+    for i in node_np:
+        if i in dic:
+            pagerank_list.append(dic[i])
+        else:
+            pagerank_list.append(0)
 
     dic1, dic2 = nx.hits(G)
-    hits_list1 = [dic1[i] for i in node_np]
-    hits_list2 = [dic2[i] for i in node_np]
+    hits_list1 = []
+    for i in node_np:
+        if i in dic1:
+            hits_list1.append(dic1[i])
+        else:
+            hits_list1.append(0)
+    hits_list2 = []
+    for i in node_np:
+        if i in dic2:
+            hits_list2.append(dic2[i])
+        else:
+            hits_list2.append(0)
 
     feature_list = [average_neighbor_degree_list, degree_centrality_list, eigenvector_centrality_list, katz_centrality_list, \
                     closeness_centrality_list, betweenness_centrality_list, subgraph_centrality_list, harmonic_centrality_list,\
