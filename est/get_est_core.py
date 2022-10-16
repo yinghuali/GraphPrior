@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from torch_geometric.nn import GCNConv
 from models.gcn import GCN
 from models.gat import GAT
+from models.tagcn import TAGCN
 from models.graphsage import GraphSAGE
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
@@ -19,13 +20,13 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 path_edge = '../data/cora/edge_index_np.pkl'
 path_x = '../data/cora/x_np.pkl'
 path_y = '../data/cora/y_np.pkl'
-path_save_label_margin = 'margin_core_graphsage_label.csv'
-path_save_label_deepgini = 'deepgini_core_graphsage_label.csv'
-path_save_label_variance = 'variance_core_graphsage_label.csv'
-path_save_label_least = 'least_core_graphsage_label.csv'
-path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_graphsage.pt'
+path_save_label_margin = 'margin_core_tagcn_label.csv'
+path_save_label_deepgini = 'deepgini_core_tagcn_label.csv'
+path_save_label_variance = 'variance_core_tagcn_label.csv'
+path_save_label_least = 'least_core_tagcn_label.csv'
+path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_tagcn.pt'
 epochs = 500
-model_name = 'graphsage'
+model_name = 'tagcn'
 
 res_save_path = 'res/est.txt'
 
@@ -52,6 +53,8 @@ def load_model(model_name):
         model = GAT(num_node_features, 16, num_classes)
     elif model_name == 'graphsage':
         model = GraphSAGE(num_node_features, 16, num_classes)
+    elif model_name == 'tagcn':
+        model = TAGCN(num_node_features, 16, num_classes)
     model.load_state_dict(torch.load(path_model))
     model.eval()
     return model
