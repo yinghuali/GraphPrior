@@ -41,3 +41,8 @@ nohup /home/yinghua/anaconda3/bin/python dogpedia_dogpedia.py > dogpedia_dogpedi
 
 
 nohup python get_embedding_feature.py -p ../data/cora/edge_index.txt -s cora > 2.log 2>&1 &
+
+nohup python get_pubmet_label.py > get_pubmet_label.log 2>&1 &
+nohup python get_pubmet_label_least.py > get_pubmet_label_least.log 2>&1 &
+nohup python get_pubmet_label_varance.py > get_pubmet_label_varance.log 2>&1 &
+

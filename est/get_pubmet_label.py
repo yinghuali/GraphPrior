@@ -12,10 +12,10 @@ from sklearn.model_selection import train_test_split
 path_edge = '../data/pubmed/edge_index_np.pkl'
 path_x = '../data/pubmed/x_np.pkl'
 path_y = '../data/pubmed/y_np.pkl'
-path_embedding = '/Users/yinghua.li/Documents/Pycharm/GNNEST/feature_engineering/pubmed_node2vec.pkl'
-path_pre = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/pre_np_pubmed_gcn.pkl'
-type_uncertaity = 'margin'
-path_save_label = 'margin_pubmed_gcn_label.csv'
+path_embedding = '../feature_engineering/pubmed_node2vec.pkl'
+path_pre = '../models/pre_np_pubmed_gcn.pkl'
+type_uncertaity = 'deepgini'
+path_save_label = 'deepgini_pubmed_gcn_label.csv'
 # margin  deepgini  variance  least
 
 
@@ -31,8 +31,13 @@ def get_network_X(edge_index_np, node_np):
 
 def get_embedding_X(path_embedding, node_np):
     embedding_dic = pickle.load(open(path_embedding, 'rb'))
-    print(embedding_dic.keys())
-    embedding_np = np.array([embedding_dic[str(i)] for i in node_np])
+    embedding_list = []
+    for i in node_np:
+        if i in embedding_dic:
+            embedding_list.append(embedding_dic[str(i)])
+        else:
+            embedding_list.append([0]*128)
+    embedding_np = np.array(embedding_list)
     return embedding_np
 
 

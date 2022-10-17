@@ -31,8 +31,13 @@ def get_network_X(edge_index_np, node_np):
 
 def get_embedding_X(path_embedding, node_np):
     embedding_dic = pickle.load(open(path_embedding, 'rb'))
-    print(embedding_dic.keys())
-    embedding_np = np.array([embedding_dic[str(i)] for i in node_np])
+    embedding_list = []
+    for i in node_np:
+        if i in embedding_dic:
+            embedding_list.append(embedding_dic[str(i)])
+        else:
+            embedding_list.append([0]*128)
+    embedding_np = np.array(embedding_list)
     return embedding_np
 
 
