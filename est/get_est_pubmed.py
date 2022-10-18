@@ -17,18 +17,18 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 
 # margin  deepgini  variance  least
 
-path_edge = '../data/pubmet/edge_index_np.pkl'
-path_x = '../data/pubmet/x_np.pkl'
-path_y = '../data/pubmet/y_np.pkl'
-path_save_label_margin = 'margin_pubmet_gcn_label.csv'
-path_save_label_deepgini = 'deepgini_pubmet_gcn_label.csv'
-path_save_label_variance = 'variance_pubmet_gcn_label.csv'
-path_save_label_least = 'least_pubmet_gcn_label.csv'
-path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/pubmet_gcn.pt'
-epochs = 500
-model_name = 'gcn'
+path_edge = '../data/pubmed/edge_index_np.pkl'
+path_x = '../data/pubmed/x_np.pkl'
+path_y = '../data/pubmed/y_np.pkl'
+path_save_label_margin = 'margin_pubmed_tagcn_label.csv'
+path_save_label_deepgini = 'deepgini_pubmed_tagcn_label.csv'
+path_save_label_variance = 'variance_pubmed_tagcn_label.csv'
+path_save_label_least = 'least_pubmed_tagcn_label.csv'
+path_model = '../models/pubmed_tagcn.pt'
+epochs = 1200
+model_name = 'tagcn'
 
-res_save_path = 'res/pubmet_gcn_est.txt'
+res_save_path = 'res/est.txt'
 
 index_count_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
 df_margin = pd.read_csv(path_save_label_margin)
@@ -148,3 +148,8 @@ write_result('res_variance:' + str(res_variance), res_save_path)
 
 
 
+# pip install torch==1.2.0
+# pip install torch_geometric==1.4.1
+# pip install torch_sparse==0.4.4
+# pip install torch_scatter==1.4.0
+# pip install torch_cluster==1.4.5

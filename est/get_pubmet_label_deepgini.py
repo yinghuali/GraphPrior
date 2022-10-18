@@ -9,13 +9,13 @@ from sklearn.metrics import silhouette_score
 from sklearn.model_selection import train_test_split
 
 # config
-path_edge = '../data/cora/edge_index_np.pkl'
-path_x = '../data/cora/x_np.pkl'
-path_y = '../data/cora/y_np.pkl'
-path_embedding = './feature_engineering/cora_node2vec.pkl'
-path_pre = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/pre_np_cora_tagcn.pkl'
-type_uncertaity = 'least'
-path_save_label = 'data_label/least_core_tagcn_label.csv'
+path_edge = '../data/pubmed/edge_index_np.pkl'
+path_x = '../data/pubmed/x_np.pkl'
+path_y = '../data/pubmed/y_np.pkl'
+path_embedding = 'feature_engineering/pubmed_node2vec.pkl'
+path_pre = '../models/pre_np_pubmed_tagcn.pkl'
+type_uncertaity = 'deepgini'
+path_save_label = 'deepgini_pubmed_tagcn_label.csv'
 # margin  deepgini  variance  least
 
 
