@@ -15,7 +15,7 @@ path_y = '../data/pubmed/y_np.pkl'
 path_embedding = 'feature_engineering/pubmed_node2vec.pkl'
 path_pre = '../models/pre_np_pubmed_tagcn.pkl'
 type_uncertaity = 'least'
-path_save_label = 'least_pubmed_tagcn_label.csv'
+path_save_label = 'data_label/least_pubmed_tagcn_label.csv'
 # margin  deepgini  variance  least
 
 

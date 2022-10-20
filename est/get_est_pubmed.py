@@ -20,15 +20,17 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 path_edge = '../data/pubmed/edge_index_np.pkl'
 path_x = '../data/pubmed/x_np.pkl'
 path_y = '../data/pubmed/y_np.pkl'
-path_save_label_margin = 'margin_pubmed_tagcn_label.csv'
-path_save_label_deepgini = 'deepgini_pubmed_tagcn_label.csv'
-path_save_label_variance = 'variance_pubmed_tagcn_label.csv'
-path_save_label_least = 'least_pubmed_tagcn_label.csv'
+path_save_label_margin = 'data_label/margin_pubmed_tagcn_label.csv'
+path_save_label_deepgini = 'data_label/deepgini_pubmed_tagcn_label.csv'
+path_save_label_variance = 'data_label/variance_pubmed_tagcn_label.csv'
+path_save_label_least = 'data_label/least_pubmed_tagcn_label.csv'
 path_model = '../models/pubmed_tagcn.pt'
 epochs = 1200
 model_name = 'tagcn'
 
-res_save_path = 'res/est.txt'
+
+# res_save_path = 'res/est.txt'
+res_save_path = 'res/est_tagcn.txt'
 
 index_count_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
 df_margin = pd.read_csv(path_save_label_margin)
@@ -122,34 +124,27 @@ res_random, res_gest = get_res_est(df_margin)
 write_result('res_random:' + str(res_random), res_save_path)
 write_result('res_gest:' + str(res_gest), res_save_path)
 
-_, res_deepgini = get_res_est(df_deepgini)
-_, res_least = get_res_est(df_least)
-_, res_variance = get_res_est(df_variance)
-
-write_result('res_deepgini:' + str(res_deepgini), res_save_path)
-write_result('res_least:' + str(res_least), res_save_path)
-write_result('res_variance:' + str(res_variance), res_save_path)
-
-# plt.style.use('ggplot')
-# fig1, ax1 = plt.subplots(figsize=(15, 12))
-# matplotlib.rcParams['font.sans-serif'] = ['SimHei']
-# matplotlib.rcParams['axes.unicode_minus'] = False
-# plt.plot(index_count_list, res_random, marker="o", markersize=5, color='blue')
-# plt.plot(index_count_list, res_gest, marker="o", markersize=5, color='darkgrey')
+# _, res_deepgini = get_res_est(df_deepgini)
+# _, res_least = get_res_est(df_least)
+# _, res_variance = get_res_est(df_variance)
 #
-# plt.legend(['Random', 'Gest'], frameon=True, prop={'size': 30}, loc=1)
-# plt.xlabel('Number of selected test inputs', color='black', size=30)
-# plt.ylabel('MSE ', color='black', size=30)
-#
-# plt.yticks(size=30, color='black')
-# plt.xticks(size=30, color='black')
-# plt.show()
+# write_result('res_deepgini:' + str(res_deepgini), res_save_path)
+# write_result('res_least:' + str(res_least), res_save_path)
+# write_result('res_variance:' + str(res_variance), res_save_path)
+
+plt.style.use('ggplot')
+fig1, ax1 = plt.subplots(figsize=(15, 12))
+matplotlib.rcParams['font.sans-serif'] = ['SimHei']
+matplotlib.rcParams['axes.unicode_minus'] = False
+plt.plot(index_count_list, res_random, marker="o", markersize=5, color='blue')
+plt.plot(index_count_list, res_gest, marker="o", markersize=5, color='darkgrey')
+
+plt.legend(['Random', 'Gest'], frameon=True, prop={'size': 30}, loc=1)
+plt.xlabel('Number of selected test inputs', color='black', size=30)
+plt.ylabel('MSE ', color='black', size=30)
+
+plt.yticks(size=30, color='black')
+plt.xticks(size=30, color='black')
+plt.show()
 
 
-
-
-# pip install torch==1.2.0
-# pip install torch_geometric==1.4.1
-# pip install torch_sparse==0.4.4
-# pip install torch_scatter==1.4.0
-# pip install torch_cluster==1.4.5
