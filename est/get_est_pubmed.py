@@ -24,7 +24,7 @@ path_save_label_margin = 'data_label/margin_pubmed_tagcn_label.csv'
 path_save_label_deepgini = 'data_label/deepgini_pubmed_tagcn_label.csv'
 path_save_label_variance = 'data_label/variance_pubmed_tagcn_label.csv'
 path_save_label_least = 'data_label/least_pubmed_tagcn_label.csv'
-path_model = '../models/pubmed_tagcn.pt'
+path_model = '../models/save_model/pubmed_tagcn.pt'
 epochs = 1200
 model_name = 'tagcn'
 

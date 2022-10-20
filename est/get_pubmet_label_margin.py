@@ -13,7 +13,7 @@ path_edge = '../data/pubmed/edge_index_np.pkl'
 path_x = '../data/pubmed/x_np.pkl'
 path_y = '../data/pubmed/y_np.pkl'
 path_embedding = 'feature_engineering/pubmed_node2vec.pkl'
-path_pre = '../models/pre_np_pubmed_tagcn.pkl'
+path_pre = '../models/save_pre/pre_np_pubmed_tagcn.pkl'
 type_uncertaity = 'margin'
 path_save_label = 'data_label/margin_pubmed_tagcn_label.csv'
 # margin  deepgini  variance  least

@@ -24,7 +24,7 @@ path_save_label_margin = 'data_label/margin_core_tagcn_label.csv'
 path_save_label_deepgini = 'data_label/deepgini_core_tagcn_label.csv'
 path_save_label_variance = 'data_label/variance_core_tagcn_label.csv'
 path_save_label_least = 'data_label/least_core_tagcn_label.csv'
-path_model = '/Users/yinghua.li/Documents/Pycharm/GNNEST/models/cora_tagcn.pt'
+path_model = '/models/save_model/cora_tagcn.pt'
 epochs = 500
 model_name = 'tagcn'
 
