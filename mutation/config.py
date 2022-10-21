@@ -8,9 +8,11 @@ dic_mutation_gcn = {
     "add_self_loops": [True, False]
 }
 
-# from sklearn.model_selection import ParameterGrid
-# param_grid = dic_mutation_gcn
-# list_dic = list(ParameterGrid(param_grid))
-#
-# print(list_dic)
-# [{'add_self_loops': True, 'bias': True, 'cached': True, 'improved': True, 'normalize': True},...]
+dic_mutation_gat = {
+    "heads": [5, 6],
+    "concat": [True],
+    "negative_slope": [0.1, 0.2],
+    "add_self_loops": [True, False],
+    "bias": [True, False]
+}
+

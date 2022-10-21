@@ -1,28 +1,22 @@
 import os
-
-path_model_file = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_gcn'
-
-
-import pickle
 import numpy as np
-import pandas as pd
 import pickle
 import random
 import torch
-import torch.nn.functional as F
 import matplotlib
-import matplotlib.pyplot as plt
-from torch_geometric.nn import GCNConv
 from gcn import GCN, Target_GCN
-from gat import GAT
+from gat import GAT, Target_GAT
 from tagcn import TAGCN
 from graphsage import GraphSAGE
 from sklearn.model_selection import train_test_split
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-model_name = 'gcn'
-target_model_path = '../models/save_model/cora_gcn.pt'
+select_ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+
+path_model_file = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_gat'
+model_name = 'gat'
+target_model_path = '../models/save_model/cora_gat.pt'
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
@@ -82,7 +76,7 @@ def load_target_model(model_name):
     if model_name == 'gcn':
         model = Target_GCN(num_node_features, 16, num_classes)
     elif model_name == 'gat':
-        model = GAT(num_node_features, 16, num_classes)
+        model = Target_GAT(num_node_features, 16, num_classes)
     elif model_name == 'graphsage':
         model = GraphSAGE(num_node_features, 16, num_classes)
     elif model_name == 'tagcn':
@@ -102,6 +96,29 @@ def get_score_sample(target_pre, mutation_pre_list):
         n_kill_model.append(n)
     return n_kill_model
 
+
+def get_res(idx_miss_list, select_idx_list, select_ratio_list):
+    res_ratio_list = []
+    for i in select_ratio_list:
+        n = int(len(select_idx_list) * i)
+        tmp_select_idx_list = select_idx_list[: n]
+        n_hit = len(np.intersect1d(idx_miss_list, tmp_select_idx_list, assume_unique=False, return_indices=False))
+        ratio = round(n_hit / len(idx_miss_list), 4)
+        res_ratio_list.append(ratio)
+    return res_ratio_list
+
+
+def Margin_score(x):
+    output_sort = np.sort(x)
+    margin_score = output_sort[:, -1] - output_sort[:, -2]
+    return margin_score
+
+
+def DeepGini_score(x):
+    gini_score = 1 - np.sum(np.power(x, 2), axis=1)
+    return gini_score
+
+
 path_model_list = get_model(path_model_file)
 path_config_list = [i.replace('.pt', '.pkl') for i in path_model_list]
 
@@ -114,16 +131,29 @@ target_pre = target_model(x, edge_index).argmax(dim=1).numpy()[test_idx]
 mutation_pre_list = [model(x, edge_index).argmax(dim=1).numpy()[test_idx] for model in model_list]
 test_y = test_y.numpy()
 idx_miss_list = get_idx_miss_class(target_pre, test_y)
+n_kill_model_np = np.array(get_score_sample(target_pre, mutation_pre_list))
 
-print(idx_miss_list)
-n_kill_model = get_score_sample(target_pre, mutation_pre_list)
+select_idx_list = n_kill_model_np.argsort()[::-1]
 
+res_ratio_list = get_res(idx_miss_list, select_idx_list, select_ratio_list)
 
+target_pre_np = target_model(x, edge_index).detach().numpy()
+target_pre_np_0_1 = np.array([1-(i/sum(i)) for i in target_pre_np])
 
+gini_score = DeepGini_score(target_pre_np_0_1)
+gini_idx_list = gini_score.argsort()[::-1]
+gini_ratio_list = get_res(idx_miss_list, gini_idx_list, select_ratio_list)
 
+margin_score = Margin_score(target_pre_np_0_1)
+margin_idx_list = margin_score.argsort()[::-1]
+margin_ratio_list = get_res(idx_miss_list, margin_idx_list, select_ratio_list)
 
+random_idx_list = random.sample(range(0, len(test_y)), len(test_y))
+random_ratio_list = get_res(idx_miss_list, random_idx_list, select_ratio_list)
 
-
-
+print(res_ratio_list, 'mutation')
+print(gini_ratio_list, 'deepgini')
+print(margin_ratio_list, 'margin')
+print(random_ratio_list, 'random')
 
 
