@@ -18,7 +18,6 @@ class GCN(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-
 class Target_GCN(torch.nn.Module):
     def __init__(self, num_node_features, hidden_channels, num_classes):
         super().__init__()

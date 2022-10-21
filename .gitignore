@@ -137,3 +137,6 @@ logs/*.log
 
 tools/SDCN/data/*
 .DS_Store
+mutation/mutation_models/*
+mutation/target_models/*
+

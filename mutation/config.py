@@ -1,4 +1,4 @@
-hidden_channel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+hidden_channel_list = list(range(2, 32))
 
 dic_mutation_gcn = {
     "normalize": [True, False],
@@ -16,3 +16,20 @@ dic_mutation_gat = {
     "bias": [True, False]
 }
 
+dic_mutation_graphsage = {
+    "normalize": [True, False],
+    "bias": [True, False]
+
+}
+
+
+# def __init__(
+#         self,
+#         in_channels: Union[int, Tuple[int, int]],
+#         out_channels: int,
+#         aggr: Optional[Union[str, List[str], Aggregation]] = "mean",
+#         normalize: bool = False,
+#         root_weight: bool = True,
+#         project: bool = False,
+#         bias: bool = True,
+#         **kwargs,

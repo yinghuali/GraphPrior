@@ -6,6 +6,7 @@ import torch
 import matplotlib
 from gcn import GCN, Target_GCN
 from gat import GAT, Target_GAT
+from graphsage import GraphSAGE, Target_GraphSAGE
 from tagcn import TAGCN
 from graphsage import GraphSAGE
 from sklearn.model_selection import train_test_split
@@ -14,9 +15,9 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 
 select_ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
-path_model_file = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_gat'
-model_name = 'gat'
-target_model_path = '../models/save_model/cora_gat.pt'
+path_model_file = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_graphsage'
+model_name = 'graphsage'
+target_model_path = '../models/save_model/cora_graphsage.pt'
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
@@ -78,7 +79,7 @@ def load_target_model(model_name):
     elif model_name == 'gat':
         model = Target_GAT(num_node_features, 16, num_classes)
     elif model_name == 'graphsage':
-        model = GraphSAGE(num_node_features, 16, num_classes)
+        model = Target_GraphSAGE(num_node_features, 16, num_classes)
     elif model_name == 'tagcn':
         model = TAGCN(num_node_features, 16, num_classes)
     model.load_state_dict(torch.load(target_model_path))
@@ -161,10 +162,18 @@ margin_score = Margin_score(target_pre_np_0_1)
 margin_idx_list = margin_score.argsort()
 margin_ratio_list = get_res(idx_miss_list, margin_idx_list, select_ratio_list)
 
+random_idx_list = random.sample(range(0, len(test_y)), len(test_y))
+random_ratio_list = get_res(idx_miss_list, random_idx_list, select_ratio_list)
 
 print(res_ratio_list, 'mutation')
 print(gini_ratio_list, 'deepgini')
 print(margin_ratio_list, 'margin')
+print(random_ratio_list, 'random')
+
+# # [0.3263, 0.4421, 0.5579, 0.6105, 0.6842, 0.7579, 0.8632, 0.9053, 0.9579, 1.0] mutation
+# # [0.1158, 0.1789, 0.3053, 0.4316, 0.5474, 0.6421, 0.7263, 0.8, 0.8842, 1.0] deepgini
+# # [0.1053, 0.1895, 0.2947, 0.4105, 0.4737, 0.5158, 0.6526, 0.7474, 0.8842, 1.0] margin
+# # [0.0737, 0.1474, 0.2316, 0.2842, 0.4421, 0.5474, 0.6842, 0.8105, 0.9158, 1.0] random
 
 
 

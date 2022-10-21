@@ -1,18 +1,17 @@
-from gcn import GCN
+from graphsage import GraphSAGE
 import pickle
 import pickle
 import numpy as np
 import torch
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv
+from sklearn.model_selection import ParameterGrid
+from config import *
 from sklearn.model_selection import train_test_split
 
 path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
 path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
 path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
 epochs = 50
-save_model_name = 'cora_gcn.pt'
-save_pre_name = 'pre_np_cora_gcn.pkl'
 
 x = pickle.load(open(path_x_np, 'rb'))
 edge_index = pickle.load(open(path_edge_index, 'rb'))
@@ -30,10 +29,10 @@ train_y = torch.from_numpy(train_y)
 test_y = torch.from_numpy(test_y)
 
 
-def train(x, edge_index, y):
+def train(x, edge_index, y, save_model_name, hidden_channels, dic):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = GCN(num_node_features, 16, num_classes).to(device)
+    model = GraphSAGE(num_node_features, hidden_channels, num_classes, dic).to(device)
     x = x.to(device)
     edge_index = edge_index.to(device)
     y = y.to(device)
@@ -61,13 +60,14 @@ def train(x, edge_index, y):
     acc = int(correct) / len(test_idx)
     print('test:', acc)
 
-    pre = model(x, edge_index)
-    pickle.dump(pre.detach().numpy(), open(save_pre_name, 'wb'), protocol=4)
-
 
 if __name__ == '__main__':
-    train(x, edge_index, y)
-
-# train: 0.9467018469656993
-# test: 0.8868388683886839
+    list_dic = list(ParameterGrid(dic_mutation_graphsage))
+    j = 0
+    for i in hidden_channel_list:
+        for dic in list_dic:
+            save_model_name = 'mutation_models/cora_graphsage/cora_graphsage_' + str(i) + '_' + str(j) + '.pt'
+            pickle.dump(dic, open('/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_graphsage/cora_graphsage_' + str(i) + '_' + str(j) + '.pkl', 'wb'))
+            train(x, edge_index, y, save_model_name, i, dic)
+            j += 1
 
