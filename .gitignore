@@ -138,5 +138,6 @@ logs/*.log
 tools/SDCN/data/*
 .DS_Store
 
+mutation/mutation_models/cora_tagcn
 
 

@@ -10,10 +10,10 @@ from sklearn.model_selection import train_test_split
 path_x_np = './data/cora/x_np.pkl'
 path_edge_index = './data/cora/edge_index_np.pkl'
 path_y = './data/cora/y_np.pkl'
-epochs = 50
-dic = dic_mutation_graphsage
-path_save_model = 'mutation_models/cora_graphsage/cora_graphsage_'
-path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_graphsage/cora_graphsage_'
+epochs_list = epochs_tagcn
+dic = dic_mutation_tagcn
+path_save_model = 'mutation_models/cora_tagcn/cora_tagcn_'
+path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_tagcn/cora_tagcn_'
 
 
 def get_data():
@@ -37,7 +37,7 @@ def get_data():
     return x, y, edge_index, num_node_features, num_classes, train_idx, test_idx
 
 
-def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name):
+def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = GraphSAGE(num_node_features, hidden_channel, num_classes, dic).to(device)
@@ -68,15 +68,15 @@ def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, trai
 
 def main(dic):
     x, y, edge_index, num_node_features, num_classes, train_idx, test_idx = get_data()
-
-    list_dic = list(ParameterGrid(dic))
     j = 0
-    for i in hidden_channel_list:
-        for dic in list_dic:
-            save_model_name = path_save_model + str(i) + '_' + str(j) + '.pt'
-            pickle.dump(dic, open(path_save_config + str(i) + '_' + str(j) + '.pkl', 'wb'))
-            train(i, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name)
-            j += 1
+    for epochs in epochs_list:
+        list_dic = list(ParameterGrid(dic))
+        for i in hidden_channel_list:
+            for tmp_dic in list_dic:
+                save_model_name = path_save_model + str(i) + '_' + str(j) + '.pt'
+                pickle.dump(tmp_dic, open(path_save_config + str(i) + '_' + str(j) + '.pkl', 'wb'))
+                train(i, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs)
+                j += 1
 
 
 if __name__ == '__main__':
