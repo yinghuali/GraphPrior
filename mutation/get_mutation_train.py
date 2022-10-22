@@ -1,10 +1,7 @@
-from graphsage import GraphSAGE
-import pickle
-import numpy as np
-import torch
 import torch.nn.functional as F
 from sklearn.model_selection import ParameterGrid
 from config import *
+from utils import *
 from sklearn.model_selection import train_test_split
 
 path_x_np = './data/cora/x_np.pkl'
@@ -14,6 +11,7 @@ epochs_list = epochs_tagcn
 dic = dic_mutation_tagcn
 path_save_model = 'mutation_models/cora_tagcn/cora_tagcn_'
 path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_tagcn/cora_tagcn_'
+model_name = 'tagcn'
 
 
 def get_data():
@@ -40,8 +38,8 @@ def get_data():
 def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = GraphSAGE(num_node_features, hidden_channel, num_classes, dic).to(device)
-
+    model = select_model(model_name, hidden_channel, num_node_features, num_classes, dic)
+    model = model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 
     model.train()

@@ -48,6 +48,18 @@ def load_target_model(model_name, num_node_features, hidden_channel, num_classes
     return model
 
 
+def select_model(model_name, hidden_channel, num_node_features, num_classes, dic):
+    if model_name == 'gcn':
+        model = GCN(num_node_features, hidden_channel, num_classes, dic)
+    elif model_name == 'gat':
+        model = GAT(num_node_features, hidden_channel, num_classes, dic)
+    elif model_name == 'graphsage':
+        model = GraphSAGE(num_node_features, hidden_channel, num_classes, dic)
+    elif model_name == 'tagcn':
+        model = TAGCN(num_node_features, hidden_channel, num_classes, dic)
+    return model
+
+
 def get_idx_miss_class(target_pre, test_y):
     idx_miss_list = []
     for i in range(len(target_pre)):

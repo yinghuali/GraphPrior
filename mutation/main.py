@@ -2,9 +2,9 @@ from get_rank_idx import *
 from utils import *
 from config import *
 
-path_model_file = './mutation_models/cora_graphsage'
-model_name = 'graphsage'
-target_model_path = './target_models/cora_graphsage.pt'
+path_model_file = './mutation_models/cora_tagcn'
+model_name = 'tagcn'
+target_model_path = './target_models/cora_tagcn.pt'
 
 path_x_np = './data/cora/x_np.pkl'
 path_edge_index = './data/cora/edge_index_np.pkl'

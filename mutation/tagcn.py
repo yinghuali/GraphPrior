@@ -5,7 +5,7 @@ from torch_geometric.nn import TAGConv
 
 class TAGCN(torch.nn.Module):
     def __init__(self, num_features, hidden_channels, num_classes, dic):
-        super().__init__()
+        super(TAGCN, self).__init__()
         self.conv1 = TAGConv(num_features, hidden_channels, **dic)
         self.conv2 = TAGConv(hidden_channels, num_classes)
 

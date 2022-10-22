@@ -27,11 +27,11 @@ dic_mutation_graphsage = {
     "bias": [True]
 }
 
-epochs_tagcn = [25, 30, 35, 40, 45, 50]
+
+epochs_tagcn = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 dic_mutation_tagcn = {
     "normalize": [True, False],
-    "bias": [True],
-    "K": [3, 4, 5]
+    "bias": [True]
 }
 
 
