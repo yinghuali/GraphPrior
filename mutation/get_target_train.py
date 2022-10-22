@@ -7,11 +7,11 @@ import torch.nn.functional as F
 from utils import *
 from sklearn.model_selection import train_test_split
 
-path_x_np = './data/citeseer/x_np.pkl'
-path_edge_index = './data/citeseer/edge_index_np.pkl'
-path_y = './data/citeseer/y_np.pkl'
-epochs = 3
-path_save_model = './target_models/citeseer_tagcn.pt'
+path_x_np = './data/pubmed/x_np.pkl'
+path_edge_index = './data/pubmed/edge_index_np.pkl'
+path_y = './data/pubmed/y_np.pkl'
+epochs = 10
+path_save_model = './target_models/pubmed_tagcn.pt'
 model_name = 'tagcn'
 hidden_channel = 16
 

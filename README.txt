@@ -48,5 +48,5 @@ nohup python get_pubmet_label_least.py > get_pubmet_label_least.log 2>&1 &
 nohup python get_pubmet_label_varance.py > get_pubmet_label_varance.log 2>&1 &
 
 
-nohup python get_est_pubmed_gat.py > get_est_pubmed_gat.log 2>&1 &
+nohup python get_mutation_train_tagcn.py > get_mutation_train_tagcn.log 2>&1 &
 

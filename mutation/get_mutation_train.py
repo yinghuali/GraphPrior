@@ -4,14 +4,14 @@ from config import *
 from utils import *
 from sklearn.model_selection import train_test_split
 
-path_x_np = './data/citeseer/x_np.pkl'
-path_edge_index = './data/citeseer/edge_index_np.pkl'
-path_y = './data/citeseer/y_np.pkl'
-epochs_list = epochs_tagcn
-dic_mutation = dic_mutation_tagcn
-path_save_model = 'mutation_models/citeseer_tagcn/citeseer_tagcn_'
-path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/citeseer_tagcn/citeseer_tagcn_'
-model_name = 'tagcn'
+path_x_np = './data/pubmed/x_np.pkl'
+path_edge_index = './data/pubmed/edge_index_np.pkl'
+path_y = './data/pubmed/y_np.pkl'
+epochs_list = epochs_graphsage
+dic_mutation = dic_mutation_graphsage
+path_save_model = 'mutation_models/pubmed_graphsage/pubmed_graphsage_'
+path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/pubmed_graphsage/pubmed_graphsage_'
+model_name = 'graphsage'
 
 
 def get_data():

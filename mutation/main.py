@@ -2,13 +2,13 @@ from get_rank_idx import *
 from utils import *
 from config import *
 
-path_model_file = './mutation_models/citeseer_tagcn'
+path_model_file = './mutation_models/pubmed_tagcn'
 model_name = 'tagcn'
-target_model_path = './target_models/citeseer_tagcn.pt'
+target_model_path = './target_models/pubmed_tagcn.pt'
 
-path_x_np = './data/citeseer/x_np.pkl'
-path_edge_index = './data/citeseer/edge_index_np.pkl'
-path_y = './data/citeseer/y_np.pkl'
+path_x_np = './data/pubmed/x_np.pkl'
+path_edge_index = './data/pubmed/edge_index_np.pkl'
+path_y = './data/pubmed/y_np.pkl'
 target_hidden_channel = 16
 
 
@@ -24,8 +24,7 @@ def main():
     #     load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
     #     for i in range(len(path_model_list))]
 
-    model_list= []
-
+    model_list = []
     for i in range(len(path_model_list)):
         try:
             tmp_model = load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
