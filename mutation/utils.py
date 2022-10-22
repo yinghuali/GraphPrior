@@ -83,7 +83,7 @@ def get_n_kill_model(target_pre, mutation_pre_list):
 def get_res_ratio_list(idx_miss_list, select_idx_list, select_ratio_list):
     res_ratio_list = []
     for i in select_ratio_list:
-        n = int(len(select_idx_list) * i)
+        n = round(len(select_idx_list) * i)
         tmp_select_idx_list = select_idx_list[: n]
         n_hit = len(np.intersect1d(idx_miss_list, tmp_select_idx_list, assume_unique=False, return_indices=False))
         ratio = round(n_hit / len(idx_miss_list), 4)

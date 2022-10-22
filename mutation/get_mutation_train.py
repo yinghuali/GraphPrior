@@ -4,13 +4,13 @@ from config import *
 from utils import *
 from sklearn.model_selection import train_test_split
 
-path_x_np = './data/cora/x_np.pkl'
-path_edge_index = './data/cora/edge_index_np.pkl'
-path_y = './data/cora/y_np.pkl'
+path_x_np = './data/citeseer/x_np.pkl'
+path_edge_index = './data/citeseer/edge_index_np.pkl'
+path_y = './data/citeseer/y_np.pkl'
 epochs_list = epochs_tagcn
-dic = dic_mutation_tagcn
-path_save_model = 'mutation_models/cora_tagcn/cora_tagcn_'
-path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_tagcn/cora_tagcn_'
+dic_mutation = dic_mutation_tagcn
+path_save_model = 'mutation_models/citeseer_tagcn/citeseer_tagcn_'
+path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/citeseer_tagcn/citeseer_tagcn_'
 model_name = 'tagcn'
 
 
@@ -35,7 +35,7 @@ def get_data():
     return x, y, edge_index, num_node_features, num_classes, train_idx, test_idx
 
 
-def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs):
+def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs, dic):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = select_model(model_name, hidden_channel, num_node_features, num_classes, dic)
@@ -73,10 +73,10 @@ def main(dic):
             for tmp_dic in list_dic:
                 save_model_name = path_save_model + str(i) + '_' + str(j) + '.pt'
                 pickle.dump(tmp_dic, open(path_save_config + str(i) + '_' + str(j) + '.pkl', 'wb'))
-                train(i, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs)
+                train(i, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs, tmp_dic)
                 j += 1
 
 
 if __name__ == '__main__':
-    main(dic)
+    main(dic_mutation)
 

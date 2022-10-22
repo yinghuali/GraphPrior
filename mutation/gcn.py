@@ -5,7 +5,7 @@ from torch_geometric.nn import GCNConv
 
 class GCN(torch.nn.Module):
     def __init__(self, num_node_features, hidden_channels, num_classes, dic):
-        super().__init__()
+        super(GCN, self).__init__()
         self.conv1 = GCNConv(num_node_features, hidden_channels, **dic)
         self.conv2 = GCNConv(hidden_channels, num_classes)
 
@@ -20,7 +20,7 @@ class GCN(torch.nn.Module):
 
 class Target_GCN(torch.nn.Module):
     def __init__(self, num_node_features, hidden_channels, num_classes):
-        super().__init__()
+        super(Target_GCN, self).__init__()
         self.conv1 = GCNConv(num_node_features, hidden_channels)
         self.conv2 = GCNConv(hidden_channels, num_classes)
 

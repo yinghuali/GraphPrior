@@ -2,13 +2,13 @@ from get_rank_idx import *
 from utils import *
 from config import *
 
-path_model_file = './mutation_models/cora_tagcn'
+path_model_file = './mutation_models/citeseer_tagcn'
 model_name = 'tagcn'
-target_model_path = './target_models/cora_tagcn.pt'
+target_model_path = './target_models/citeseer_tagcn.pt'
 
-path_x_np = './data/cora/x_np.pkl'
-path_edge_index = './data/cora/edge_index_np.pkl'
-path_y = './data/cora/y_np.pkl'
+path_x_np = './data/citeseer/x_np.pkl'
+path_edge_index = './data/citeseer/edge_index_np.pkl'
+path_y = './data/citeseer/y_np.pkl'
 target_hidden_channel = 16
 
 
@@ -20,9 +20,21 @@ def main():
     hidden_channel_list = [int(i.split('/')[-1].split('_')[2]) for i in path_config_list]
     dic_list = [pickle.load(open(i, 'rb')) for i in path_config_list]
 
-    model_list = [
-        load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
-        for i in range(len(path_model_list))]
+    # model_list = [
+    #     load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
+    #     for i in range(len(path_model_list))]
+
+    model_list= []
+
+    for i in range(len(path_model_list)):
+        try:
+            tmp_model = load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
+            model_list.append(tmp_model)
+        except:
+            print(dic_list[i])
+
+    print('number of models:', len(path_model_list))
+    print('number of models loaded:', len(model_list))
 
     target_model = load_target_model(model_name, num_node_features, target_hidden_channel, num_classes,
                                      target_model_path)
