@@ -17,7 +17,7 @@ import numpy as np
 
 
 def edge_index_to_adj(edge_index_np):
-    n_node = len(set(edge_index_np[0]))
+    n_node = max(edge_index_np[0])+1
     m = np.full((n_node, n_node), 0)
     i_j_list = []
     for idx in range(len(edge_index_np[0])):

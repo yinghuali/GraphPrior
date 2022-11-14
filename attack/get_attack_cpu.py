@@ -61,7 +61,7 @@ def get_dice(labels, adj, save_edge_index):
 
 
 def get_minmax(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index):
-    model = MinMax(model=surrogate, nnodes=adj.shape[0], loss_type='CE', device='cuda').to('cuda')
+    model = MinMax(model=surrogate, nnodes=adj.shape[0], loss_type='CE', device='cpu').to('cpu')
     model.attack(features, adj, labels, idx_train, n_perturbations=int(len(labels)*0.3))
     modified_adj = model.modified_adj
     edge_index = adj_to_edge_index(modified_adj)
@@ -69,7 +69,7 @@ def get_minmax(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_
 
 
 def get_pgdattack(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index):
-    model = PGDAttack(model=surrogate, nnodes=adj.shape[0], loss_type='CE', device='cuda').to('cuda')
+    model = PGDAttack(model=surrogate, nnodes=adj.shape[0], loss_type='CE', device='cpu').to('cpu')
     model.attack(features, adj, labels, idx_train, n_perturbations=int(len(labels)*0.3))
     modified_adj = model.modified_adj
     edge_index = adj_to_edge_index(modified_adj)
@@ -131,17 +131,18 @@ def main():
     features, labels, adj, idx_train, idx_test, idx_val, idx_unlabeled = load_data(path_x_np, path_edge_index, path_y)
 
     surrogate = GCN(nfeat=features.shape[1], nclass=labels.max().item()+1,
-                    nhid=16, dropout=0, with_relu=False, with_bias=False, device='cuda').to('cuda')
+                    nhid=16, dropout=0, with_relu=False, with_bias=False, device='cpu').to('cpu')
     surrogate.fit(features, adj, labels, idx_train, patience=30)
 
-    get_dice(labels, adj, save_edge_index)
-    get_minmax(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index)
+    # get_dice(labels, adj, save_edge_index)
+    # get_minmax(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index)
+
     get_randomattack_add(labels, adj, save_edge_index)
     get_randomattack_remove(labels, adj, save_edge_index)
     get_randomattack_flip(labels, adj, save_edge_index)
     get_pgdattack(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index)
-    get_nodeembeddingattack_add(adj, save_edge_index)
-    get_nodeembeddingattack_remove(adj, save_edge_index)
+    # get_nodeembeddingattack_add(adj, save_edge_index)
+    # get_nodeembeddingattack_remove(adj, save_edge_index)
 
 
 if __name__ == '__main__':
