@@ -24,7 +24,7 @@ scp iris-cluster:/mnt/irisgpfs/users/yili/pycharm/robustness_mobile_model/data/m
 scp -r /Users/yinghua.li/Documents/imagenet/mobile_model_data/mnist_pkl/contrast_test.pkl iris-cluster:/mnt/irisgpfs/users/yili/pycharm/data/mnist_pkl
 scp -r /Users/yinghua.li/Documents/imagenet/insect_150_150 iris-cluster:/work/projects/acc-estima-aiapp
 
-scp -r /Users/yinghua.li/Documents/Pycharm/GNNEST yinghua@trux01.uni.lu:/home/yinghua/pycharm
+scp -r /Users/yinghua.li/Documents/Pycharm/GNNEST iris-cluster:/work/projects/acc-estima-aiapp
 
 
 # 后台运行shen
