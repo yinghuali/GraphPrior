@@ -4,14 +4,17 @@ from config import *
 from utils import *
 from sklearn.model_selection import train_test_split
 
-path_x_np = './data/pubmed/x_np.pkl'
-path_edge_index = './data/pubmed/edge_index_np.pkl'
-path_y = './data/pubmed/y_np.pkl'
+path_x_np = './data/cora/x_np.pkl'
+path_edge_index = './data/cora/edge_index_np.pkl'
+path_y = './data/cora/y_np.pkl'
 epochs_list = epochs_graphsage
 dic_mutation = dic_mutation_graphsage
-path_save_model = 'mutation_models/pubmed_graphsage/pubmed_graphsage_'
-path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/pubmed_graphsage/pubmed_graphsage_'
+path_save_model = 'mutation_models/cora_graphsage/cora_graphsage_'
+# path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/cora_graphsage/cora_graphsage_'
+path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_graphsage/cora_graphsage_'
+
 model_name = 'graphsage'
+
 
 
 def get_data():

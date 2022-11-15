@@ -18,7 +18,10 @@ scp -r iris-cluster:/home/users/yili/pycharm/MobileModelIdentif/000001A94F46A0C3
 
 scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/data/cifar10_pkl /Users/yinghua.li/Documents/imagenet/tmp
 
-scp iris-cluster:/mnt/irisgpfs/users/yili/pycharm/robustness_mobile_model/data/mnist/bim_x_train_adv.pkl /Users/yinghua.li/Documents/Pycharm/robustness_mobile_model/RQ2/mnist
+scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_gat /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_gcn /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_graphsage /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+
 
 # 本地上传
 scp -r /Users/yinghua.li/Documents/imagenet/mobile_model_data/mnist_pkl/contrast_test.pkl iris-cluster:/mnt/irisgpfs/users/yili/pycharm/data/mnist_pkl

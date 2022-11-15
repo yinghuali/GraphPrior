@@ -29,7 +29,7 @@ def load_model(model_name, path_model, hidden_channel, num_node_features, num_cl
         model = GraphSAGE(num_node_features, hidden_channel, num_classes, dic)
     elif model_name == 'tagcn':
         model = TAGCN(num_node_features, hidden_channel, num_classes, dic)
-    model.load_state_dict(torch.load(path_model))
+    model.load_state_dict(torch.load(path_model, map_location=torch.device('cpu')))
     model.eval()
     return model
 
@@ -43,7 +43,7 @@ def load_target_model(model_name, num_node_features, hidden_channel, num_classes
         model = Target_GraphSAGE(num_node_features, hidden_channel, num_classes)
     elif model_name == 'tagcn':
         model = Target_TAGCN(num_node_features, hidden_channel, num_classes)
-    model.load_state_dict(torch.load(target_model_path))
+    model.load_state_dict(torch.load(target_model_path, map_location=torch.device('cpu')))
     model.eval()
     return model
 

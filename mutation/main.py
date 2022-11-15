@@ -2,14 +2,35 @@ from get_rank_idx import *
 from utils import *
 from config import *
 
-path_model_file = './mutation_models/pubmed_tagcn'
-model_name = 'tagcn'
-target_model_path = './target_models/pubmed_tagcn.pt'
+import argparse
+ap = argparse.ArgumentParser()
+ap.add_argument("--path_model_file", type=str)
+ap.add_argument("--model_name", type=str)
+ap.add_argument("--target_model_path", type=str)
+ap.add_argument("--path_x_np", type=str)
+ap.add_argument("--path_edge_index", type=str)
+ap.add_argument("--path_y", type=str)
+args = ap.parse_args()
 
-path_x_np = './data/pubmed/x_np.pkl'
-path_edge_index = './data/pubmed/edge_index_np.pkl'
-path_y = './data/pubmed/y_np.pkl'
+path_model_file = args.path_model_file
+model_name = args.model_name
+target_model_path = args.target_model_path
+
+path_x_np = args.path_x_np
+path_edge_index = args.path_edge_index
+path_y = args.path_y
 target_hidden_channel = 16
+
+# python main.py --path_model_file './mutation_models/cora_tagcn' --model_name './mutation_models/cora_tagcn' --model_name 'tagcn' --target_model_path './target_models/cora_tagcn.pt' --path_x_np './data/cora/x_np.pkl' --path_edge_index '../data/attack_data/cora/cora_dice.pkl' --path_y './data/cora/y_np.pkl'
+
+# path_model_file = './mutation_models/cora_gcn'
+# model_name = 'gcn'
+# target_model_path = './target_models/cora_gcn.pt'
+#
+# path_x_np = './data/cora/x_np.pkl'
+# path_edge_index = '../data/attack_data/cora/cora_dice.pkl'
+# path_y = './data/cora/y_np.pkl'
+
 
 
 def main():
@@ -19,6 +40,7 @@ def main():
     path_config_list = [i.replace('.pt', '.pkl') for i in path_model_list]
     hidden_channel_list = [int(i.split('/')[-1].split('_')[2]) for i in path_config_list]
     dic_list = [pickle.load(open(i, 'rb')) for i in path_config_list]
+
 
     # model_list = [
     #     load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
