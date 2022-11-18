@@ -27,7 +27,8 @@ scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_mo
 scp -r /Users/yinghua.li/Documents/imagenet/mobile_model_data/mnist_pkl/contrast_test.pkl iris-cluster:/mnt/irisgpfs/users/yili/pycharm/data/mnist_pkl
 scp -r /Users/yinghua.li/Documents/imagenet/insect_150_150 iris-cluster:/work/projects/acc-estima-aiapp
 
-scp -r /Users/yinghua.li/Documents/Pycharm/GNNEST iris-cluster:/work/projects/acc-estima-aiapp
+scp -r /Users/yinghua.li/Desktop/hr/DEL/DEL-Core-1 xdang-cluster:/home/users/xdang/hr
+scp -r /Users/yinghua.li/Desktop/hr/DGCF xdang-cluster:/home/users/xdang/hr
 
 
 # 后台运行shen

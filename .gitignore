@@ -140,4 +140,6 @@ tools/SDCN/data/*
 
 mutation/mutation_models/*
 
+data/lastfm/x_np.pkl
+mutation/data/lastfm/x_np.pkl
 

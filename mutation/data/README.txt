@@ -66,3 +66,7 @@ cora和appnp
 Cora	“Collective classification in network data,” AI magazine,2008	1	      2708	   5429	   1433	  7
 Citeseer	“Collective classification in network data,” AI magazine,2008	1	  3327	   4732	   3703	  6
 Pubmed	“Collective classification in network data,” AI magazine,2008	1	      19717	   44338   500	  3
+
+
+Data:LastFM Asia Social Network
+https://snap.stanford.edu/data/feather-lastfm-social.html

@@ -107,3 +107,30 @@ def load_data(path_x_np, path_edge_index, path_y):
 
     return num_node_features, num_classes, x, edge_index, y, test_y, train_idx, test_idx
 
+
+def get_mutation_model_features(num_node_features, target_hidden_channel, num_classes, target_model_path, x, y, edge_index, model_list, model_name):
+    target_model = load_target_model(model_name, num_node_features, target_hidden_channel, num_classes, target_model_path)
+    target_pre = target_model(x, edge_index).argmax(dim=1).numpy()
+    mutation_pre_idx_np = np.array([model(x, edge_index).argmax(dim=1).numpy() for model in model_list]).T
+    feature_list = []
+    for i in range(len(target_pre)):
+        tmp_list = []
+        for j in range(len(mutation_pre_idx_np[i])):
+            if mutation_pre_idx_np[i][j] != target_pre[i]:
+                tmp_list.append(1)
+            else:
+                tmp_list.append(0)
+        feature_list.append(tmp_list)
+    feature_np = np.array(feature_list)
+
+    label_list = []
+    for i in range(len(target_pre)):
+        if target_pre[i] != y[i]:
+            label_list.append(1)
+        else:
+            label_list.append(0)
+    label_np = np.array(label_list)
+
+    return feature_np, label_np
+
+
