@@ -9,4 +9,4 @@
 #SBATCH -C skylake
 #SBATCH --mem 700G
 
-python get_attack.py --path_x_np '../data/pubmed/x_np.pkl' --path_edge_index '../data/pubmed/edge_index_np.pkl' --path_y '../data/pubmed/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GNNEST/data/attack_data/pubmed/pubmed'
+python get_attack.py --path_x_np '../data/lastfm/x_np.pkl' --path_edge_index '../data/lastfm/edge_index_np.pkl' --path_y '../data/lastfm/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GNNEST/data/attack_data/lastfm/lastfm'
