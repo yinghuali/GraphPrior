@@ -134,3 +134,12 @@ def get_mutation_model_features(num_node_features, target_hidden_channel, num_cl
     return feature_np, label_np
 
 
+def apfd(error_idx_list, pri_idx_list):
+    error_idx_list = list(error_idx_list)
+    pri_idx_list = list(pri_idx_list)
+    n = len(pri_idx_list)
+    m = len(error_idx_list)
+    TF_list = [pri_idx_list.index(i) for i in error_idx_list]
+    apfd = 1 - sum(TF_list)*1.0 / (n*m) + 1 / (2*n)
+    return apfd
+

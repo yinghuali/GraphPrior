@@ -16,11 +16,16 @@ scp yinghua@trux01.uni.lu:0A0819A816111FE5F2F4AB19E9396C3D6AC158CAEA5A3AEA0ED3F5
 scp yinghua@trux01.uni.lu:/home/yinghua/pycharm/MobileModelIdentif/ai_apps_analysis/unable_determine_framework.txt /Users/yinghua.li/Documents/Server/MobileModelIdentif/result
 scp -r iris-cluster:/home/users/yili/pycharm/MobileModelIdentif/000001A94F46A0C3DDA514E1F24E675648835BBA5EF3C3AA72D9C378534FCAD6_test /Users/yinghua.li/Desktop
 
-scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/data/cifar10_pkl /Users/yinghua.li/Documents/imagenet/tmp
+scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/data/ratio_attack/pubmed /Users/yinghua.li/Documents/Pycharm/GNNEST/data/ratio_attack
 
 scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_gat /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
 scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_gcn /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
-scp -r iris-cluster:/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/cora_graphsage /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/home/users/yili/pycharm/GNNEST/mutation/mutatioin_rule_data_importance /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation
+
+scp -r iris-cluster:/home/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_gat /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/home/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_gcn /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/home/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_graphsage /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
+scp -r iris-cluster:/home/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_tagcn /Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models
 
 
 # 本地上传

@@ -1,95 +1,83 @@
 import torch.nn.functional as F
-import torch.nn as nn
-from get_rank_idx import *
-from utils import *
-import torch.utils.data as Data
+from sklearn.model_selection import ParameterGrid
 from config import *
-from sklearn.linear_model import LogisticRegression
-from dnn import DNN, get_acc
+from utils import *
+from sklearn.model_selection import train_test_split
+
+path_x_np = './data/lastfm/x_np.pkl'
+path_edge_index = './data/lastfm/edge_index_np.pkl'
+path_y = './data/lastfm/y_np.pkl'
+epochs_list = epochs_gat
+dic_mutation = dic_mutation_gat
+path_save_model = 'mutation_models/lastfm_gat/lastfm_gat_'
+path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/lastfm_gat/lastfm_gat_'
+# path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_gat/lastfm_gat_'
+
+model_name = 'gat'
 
 
 
-path_model_file = './mutation_models/cora_gcn'
-model_name = 'gcn'
-target_model_path = './target_models/cora_gcn.pt'
+def get_data():
+    x = pickle.load(open(path_x_np, 'rb'))
+    edge_index = pickle.load(open(path_edge_index, 'rb'))
+    y = pickle.load(open(path_y, 'rb'))
 
-path_x_np = './data/cora/x_np.pkl'
-path_edge_index = '../data/attack_data/cora/cora_dice.pkl'
-path_y = './data/cora/y_np.pkl'
-target_hidden_channel = 16
+    num_node_features = len(x[0])
+    num_classes = len(set(y))
+    idx_np = np.array(list(range(len(x))))
+    train_idx, test_idx, train_y, test_y = train_test_split(idx_np, y, test_size=0.3, random_state=17)
+
+    x = torch.from_numpy(x)
+    edge_index = torch.from_numpy(edge_index)
+    y = torch.from_numpy(y)
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    x = x.to(device)
+    edge_index = edge_index.to(device)
+    y = y.to(device)
+    return x, y, edge_index, num_node_features, num_classes, train_idx, test_idx
 
 
-num_node_features, num_classes, x, edge_index, y, test_y, train_idx, test_idx = load_data(path_x_np,
-                                                                                          path_edge_index, path_y)
-path_model_list = get_model_path(path_model_file)
-path_model_list = sorted(path_model_list)
-path_config_list = [i.replace('.pt', '.pkl') for i in path_model_list]
-hidden_channel_list = [int(i.split('/')[-1].split('_')[2]) for i in path_config_list]
-dic_list = [pickle.load(open(i, 'rb')) for i in path_config_list]
+def train(hidden_channel, x, y, edge_index, num_node_features, num_classes, train_idx, test_idx, save_model_name, epochs, dic):
 
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = select_model(model_name, hidden_channel, num_node_features, num_classes, dic)
+    model = model.to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 
-# model_list = [
-#     load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
-#     for i in range(len(path_model_list))]
-
-model_list = []
-for i in range(len(path_model_list)):
-    try:
-        tmp_model = load_model(model_name, path_model_list[i], hidden_channel_list[i], num_node_features, num_classes, dic_list[i])
-        model_list.append(tmp_model)
-    except:
-        print(dic_list[i])
-
-print('number of models:', len(path_model_list))
-print('number of models loaded:', len(model_list))
-
-target_model = load_target_model(model_name, num_node_features, target_hidden_channel, num_classes, target_model_path)
-
-feature_np, label_np = get_mutation_model_features(num_node_features, target_hidden_channel, num_classes, target_model_path, x, y, edge_index, model_list, model_name)
-x_train = feature_np[train_idx]
-y_train = label_np[train_idx]
-x_test = feature_np[test_idx]
-y_test = label_np[test_idx]
-
-# DNN
-x_train_t = torch.from_numpy(x_train).float()
-y_train_t = torch.from_numpy(y_train).long()
-# x_train_t.to(device='cuda')
-# y_train_t.to(device='cuda')
-
-x_test_t = torch.from_numpy(x_test).float()
-y_test_t = torch.from_numpy(y_test).long()
-# x_test_t.to(device='cuda')
-# y_test_t.to(device='cuda')
-
-print(x_train_t.shape)
-print(y_train_t.shape)
-
-input_dim = len(feature_np[0])
-hiden_dim = 8
-output_dim = 2
-dataset = Data.TensorDataset(x_train_t, y_train_t)
-dataloader = Data.DataLoader(dataset=dataset, batch_size=64, shuffle=True)
-model = DNN(input_dim, hiden_dim, output_dim)
-optim = torch.optim.Adam(model.parameters(), lr=0.01)
-loss_fun = nn.CrossEntropyLoss()
-
-for e in range(40):
-    epoch_loss = 0
-    epoch_acc = 0
-    for i, (x_t, y_t) in enumerate(dataloader):
-        optim.zero_grad()
-
-        out = model(x_t)
-        loss = loss_fun(out, y_t)
-
+    model.train()
+    for epoch in range(epochs):
+        optimizer.zero_grad()
+        out = model(x, edge_index)
+        loss = F.nll_loss(out[train_idx], y[train_idx])
         loss.backward()
-        optim.step()
+        optimizer.step()
 
-        epoch_loss += loss.data
-        epoch_acc += get_acc(out, y_t)
+    torch.save(model.state_dict(), save_model_name)
 
-    if e % 20 == 0:
-        print('epoch: %d, loss: %f, acc: %f' % (e, epoch_loss, epoch_acc))
+    model.eval()
+    pred = model(x, edge_index).argmax(dim=1)
 
-y_pre_test = model(x_test_t).detach().numpy()[:, 1]
+    correct = (pred[train_idx] == y[train_idx]).sum()
+    acc = int(correct) / len(train_idx)
+    print('train:', acc)
+
+    correct = (pred[test_idx] == y[test_idx]).sum()
+    acc = int(correct) / len(test_idx)
+    print('test:', acc)
+
+
+def main(dic):
+    x, y, edge_index, num_node_features, num_classes, train_idx, test_idx = get_data()
+    j = 0
+    for epochs in epochs_list:
+        list_dic = list(ParameterGrid(dic))
+        for i in hidden_channel_list:
+            for tmp_dic in list_dic:
+                pickle.dump(tmp_dic, open(path_save_config + str(i) + '_' + str(j) + 'A_' + str(epochs) + '.pkl', 'wb'))
+                j += 1
+
+
+if __name__ == '__main__':
+    main(dic_mutation)
+

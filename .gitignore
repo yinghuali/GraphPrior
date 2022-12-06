@@ -143,3 +143,10 @@ mutation/mutation_models/*
 data/lastfm/x_np.pkl
 mutation/data/lastfm/x_np.pkl
 
+mutation/data/*
+mutation/res/ratio_res_misclassification_models_citeseer.csv
+mutation/res/ratio_res_misclassification_models_cora.csv
+mutation/res/ratio_res_misclassification_models_lastfm.csv
+mutation/res/ratio_res_misclassification_models_pubmed.csv
+
+
