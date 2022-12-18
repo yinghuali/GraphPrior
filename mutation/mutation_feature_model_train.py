@@ -146,6 +146,7 @@ def main():
                                           edge_index, test_idx, model_list, model_name)
 
     x_test_target_model_pre = target_model(x, edge_index).detach().numpy()[test_idx]
+
     margin_rank_idx = Margin_rank_idx(x_test_target_model_pre)
     deepGini_rank_idx = DeepGini_rank_idx(x_test_target_model_pre)
     leastConfidence_rank_idx = LeastConfidence_rank_idx(x_test_target_model_pre)

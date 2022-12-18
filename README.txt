@@ -1,4 +1,8 @@
-ls -lh
+RQ1: 16
+RQ2: 16
+RQ3: 108
+RQ4: 432
+RQ3为108组，因为RQ4，每个攻击level为(0.1, 0.2, 0.3, 0.4), 所以108*4=432组
 
 # ag
 ag /home/yinghua/pycharm/MobileModelIdentif/sha256_play_google_com_list_0_50.pkl -i -l --silent -m2 /Users/yinghua.li/Documents/Server/MobileModelIdentif
