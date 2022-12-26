@@ -9,4 +9,4 @@
 #SBATCH -C skylake
 #SBATCH --mem 100G
 
-python get_range_attack.py --path_x_np '../data/pubmed/x_np.pkl' --path_edge_index '../data/pubmed/edge_index_np.pkl' --path_y '../data/pubmed/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GNNEST/data/ratio_attack/pubmed/pubmed'
+python get_range_attack.py --path_x_np '../data/pubmed/x_np.pkl' --path_edge_index '../data/pubmed/edge_index_np.pkl' --path_y '../data/pubmed/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GraphPrior/data/ratio_attack/pubmed/pubmed'

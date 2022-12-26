@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/pubmed/x_np.pkl'
-path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/pubmed/edge_index_np.pkl'
-path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/pubmed/y_np.pkl'
+path_x_np = '//data/pubmed/x_np.pkl'
+path_edge_index = '//data/pubmed/edge_index_np.pkl'
+path_y = '//data/pubmed/y_np.pkl'
 epochs = 50
 save_model_name = 'pubmed_tagcn.pt'
 save_pre_name = 'pre_np_pubmed_tagcn.pkl'

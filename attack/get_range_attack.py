@@ -21,7 +21,7 @@ path_y = args.path_y
 save_edge_index = args.save_edge_index
 
 
-# python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GNNEST/data/ratio_attack/cora/cora'
+# python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GraphPrior/data/ratio_attack/cora/cora'
 
 
 def load_data(path_x_np, path_edge_index, path_y):

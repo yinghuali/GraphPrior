@@ -10,8 +10,8 @@ path_y = './data/lastfm/y_np.pkl'
 epochs_list = epochs_gat
 dic_mutation = dic_mutation_gat
 path_save_model = 'mutation_models/lastfm_gat/lastfm_gat_'
-path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/lastfm_gat/lastfm_gat_'
-# path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_gat/lastfm_gat_'
+path_save_config = '//mutation/mutation_models/lastfm_gat/lastfm_gat_'
+# path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GraphPrior/mutation/mutation_models/lastfm_gat/lastfm_gat_'
 
 model_name = 'gat'
 

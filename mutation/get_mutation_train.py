@@ -10,8 +10,8 @@ path_y = './data/lastfm/y_np.pkl'
 epochs_list = epochs_tagcn
 dic_mutation = dic_mutation_tagcn
 path_save_model = 'mutation_models/lastfm_tagcn/lastfm_tagcn_'
-# path_save_config = '/Users/yinghua.li/Documents/Pycharm/GNNEST/mutation/mutation_models/lastfm_tagcn/lastfm_tagcn_'
-path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GNNEST/mutation/mutation_models/lastfm_tagcn/lastfm_tagcn_'
+# path_save_config = '/Users/yinghua.li/Documents/Pycharm/GraphPrior/mutation/mutation_models/lastfm_tagcn/lastfm_tagcn_'
+path_save_config = '/mnt/irisgpfs/users/yili/pycharm/GraphPrior/mutation/mutation_models/lastfm_tagcn/lastfm_tagcn_'
 
 model_name = 'tagcn'
 

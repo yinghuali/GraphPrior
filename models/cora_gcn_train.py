@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/x_np.pkl'
-path_edge_index = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/edge_index_np.pkl'
-path_y = '/Users/yinghua.li/Documents/Pycharm/GNNEST/data/cora/y_np.pkl'
+path_x_np = '//data/cora/x_np.pkl'
+path_edge_index = '//data/cora/edge_index_np.pkl'
+path_y = '//data/cora/y_np.pkl'
 epochs = 50
 save_model_name = 'cora_gcn.pt'
 save_pre_name = 'pre_np_cora_gcn.pkl'

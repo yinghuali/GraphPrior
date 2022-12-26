@@ -18,7 +18,7 @@ from torch_geometric.datasets import Planetoid
 # pickle.dump(y_np, open('./pubmed/y_np.pkl', 'wb'), protocol=4)
 # pickle.dump(edge_index_np, open('./pubmed/edge_index_np.pkl', 'wb'), protocol=4)
 #
-# edge_index_np = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/pubmed/edge_index_np.pkl', 'rb'))
+# edge_index_np = pickle.load(open('/Users/yinghua.li/Documents/Pycharm/GraphPrior/data/pubmed/edge_index_np.pkl', 'rb'))
 #
 #
 # edge_index_list = []
@@ -28,7 +28,7 @@ from torch_geometric.datasets import Planetoid
 #
 #
 #
-# re = open('/Users/yinghua.li/Documents/Pycharm/GNNEST/data/pubmed/edge_index.txt', 'a')
+# re = open('/Users/yinghua.li/Documents/Pycharm/GraphPrior/data/pubmed/edge_index.txt', 'a')
 # for i in range(len(edge_index_list)):
 #     re.write(str(edge_index_list[i][0]) + ' ' + str(edge_index_list[i][1]) + '\n')
 # re.close()

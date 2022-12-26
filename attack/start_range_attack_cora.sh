@@ -9,4 +9,4 @@
 #SBATCH -C skylake
 #SBATCH --mem 100G
 
-python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GNNEST/data/ratio_attack/cora/cora'
+python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GraphPrior/data/ratio_attack/cora/cora'
