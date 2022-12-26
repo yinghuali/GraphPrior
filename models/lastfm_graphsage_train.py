@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '//data/lastfm/x_np.pkl'
-path_edge_index = '//data/lastfm/edge_index_np.pkl'
-path_y = '//data/lastfm/y_np.pkl'
+path_x_np = '../data/lastfm/x_np.pkl'
+path_edge_index = '../data/lastfm/edge_index_np.pkl'
+path_y = '../data/lastfm/y_np.pkl'
 epochs = 50
 save_model_name = 'lastfm_graphsage.pt'
 save_pre_name = 'pre_np_lastfm_graphsage.pkl'

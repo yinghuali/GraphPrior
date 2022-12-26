@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '//data/citeseer/x_np.pkl'
-path_edge_index = '//data/citeseer/edge_index_np.pkl'
-path_y = '//data/citeseer/y_np.pkl'
+path_x_np = '../data/citeseer/x_np.pkl'
+path_edge_index = '../data/citeseer/edge_index_np.pkl'
+path_y = '../data/citeseer/y_np.pkl'
 epochs = 50
 save_model_name = 'citeseer_gat.pt'
 save_pre_name = 'pre_np_citeseer_gat.pkl'
