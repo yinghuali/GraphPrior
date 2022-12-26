@@ -1,1 +1,1 @@
-# GNNEST
+GraphPrior
