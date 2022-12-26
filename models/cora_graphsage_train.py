@@ -68,7 +68,5 @@ def train(x, edge_index, y):
 if __name__ == '__main__':
     train(x, edge_index, y)
 
-# train: 0.9963060686015831
-# test: 0.8843788437884379
 
 
