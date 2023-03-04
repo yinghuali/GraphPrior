@@ -7,12 +7,29 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '../data/citeseer/x_np.pkl'
-path_edge_index = '../data/citeseer/edge_index_np.pkl'
-path_y = '../data/citeseer/y_np.pkl'
-epochs = 50
-save_model_name = 'citeseer_tagcn.pt'
-save_pre_name = 'pre_np_citeseer_tagcn.pkl'
+# path_x_np = '../data/citeseer/x_np.pkl'
+# path_edge_index = '../data/citeseer/edge_index_np.pkl'
+# path_y = '../data/citeseer/y_np.pkl'
+# epochs = 10
+# save_model_name = 'citeseer_tagcn.pt'
+# save_pre_name = 'pre_np_citeseer_tagcn.pkl'
+
+import argparse
+ap = argparse.ArgumentParser()
+ap.add_argument("--path_x_np", type=str)
+ap.add_argument("--path_edge_index", type=str)
+ap.add_argument("--path_y", type=str)
+ap.add_argument("--epochs", type=int)
+ap.add_argument("--save_model_name", type=str)
+ap.add_argument("--save_pre_name", type=str)
+
+args = ap.parse_args()
+path_x_np = args.path_x_np
+path_edge_index = args.path_edge_index
+path_y = args.path_y
+epochs = args.epochs
+save_model_name = args.save_model_name
+save_pre_name = args.save_pre_name
 
 x = pickle.load(open(path_x_np, 'rb'))
 edge_index = pickle.load(open(path_edge_index, 'rb'))
@@ -62,7 +79,7 @@ def train(x, edge_index, y):
     print('test:', acc)
 
     pre = model(x, edge_index)
-    pickle.dump(pre.detach().numpy(), open(save_pre_name, 'wb'), protocol=4)
+    pickle.dump(pre.detach().cpu().numpy(), open(save_pre_name, 'wb'), protocol=4)
 
 
 if __name__ == '__main__':
