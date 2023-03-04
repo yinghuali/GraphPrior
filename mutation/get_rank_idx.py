@@ -53,3 +53,10 @@ def PCS_rank_idx(x):
     pcs_score = 1 - (output_sort[:, -1] - output_sort[:, -2])
     pcs_rank_idx = pcs_score.argsort()[::-1]
     return pcs_rank_idx
+
+
+def Entropy_rank_idx(x):
+    log_probs = np.log2(x)
+    entropy = -1 * np.sum(x * log_probs, axis=1)
+    entropy_rank_idx = np.argsort(entropy)[::-1]
+    return entropy_rank_idx
