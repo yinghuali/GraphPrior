@@ -46,3 +46,10 @@ def VanillaSoftmax_rank_idx(x):
     value = 1 - x.max(1)
     vanillasoftmax_rank_idx = np.argsort(value)[::-1]
     return vanillasoftmax_rank_idx
+
+
+def PCS_rank_idx(x):
+    output_sort = np.sort(x)
+    pcs_score = 1 - (output_sort[:, -1] - output_sort[:, -2])
+    pcs_rank_idx = pcs_score.argsort()[::-1]
+    return pcs_rank_idx
