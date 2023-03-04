@@ -41,3 +41,8 @@ def Mutation_rank_idx(num_node_features, target_hidden_channel, num_classes, tar
     select_rank_list = n_kill_model_np.argsort()[::-1]
     return select_rank_list
 
+
+def VanillaSoftmax_rank_idx(x):
+    value = 1 - x.max(1)
+    vanillasoftmax_rank_idx = np.argsort(value)[::-1]
+    return vanillasoftmax_rank_idx
