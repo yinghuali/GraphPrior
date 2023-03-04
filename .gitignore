@@ -153,6 +153,7 @@ README.txt
 ~$GraphPrior.pptx
 *.ipynb
 ResultAnalysis.ipynb
+mutation/all_mutation_models/*
 
 
 
