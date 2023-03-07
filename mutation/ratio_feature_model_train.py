@@ -8,6 +8,7 @@ from config import *
 from sklearn.linear_model import LogisticRegression
 from dnn import DNN, get_acc
 from lightgbm import LGBMClassifier
+from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 
@@ -23,7 +24,6 @@ ap.add_argument("--path_y", type=str)
 ap.add_argument("--subject_name", type=str)
 ap.add_argument("--path_result", type=str)
 ap.add_argument("--path_pre_result", type=str)
-
 
 args = ap.parse_args()
 path_model_file = args.path_model_file
@@ -107,6 +107,13 @@ def main():
     lgb_rank_idx = y_pred_test.argsort()[::-1].copy()
     lgb_pre_list = list(y_pred_test).copy()
 
+    # XGB
+    model = XGBClassifier()
+    model.fit(x_train, y_train)
+    y_pred_test = model.predict_proba(x_test)[:, 1]
+    xgb_rank_idx = y_pred_test.argsort()[::-1].copy()
+    xgb_pre_list = list(y_pred_test).copy()
+
     # DNN
     x_train_t = torch.from_numpy(x_train).float()
     y_train_t = torch.from_numpy(y_train).long()
@@ -150,13 +157,19 @@ def main():
                                           edge_index, test_idx, model_list, model_name)
 
     x_test_target_model_pre = target_model(x, edge_index).detach().numpy()[test_idx]
+
     margin_rank_idx = Margin_rank_idx(x_test_target_model_pre)
     deepGini_rank_idx = DeepGini_rank_idx(x_test_target_model_pre)
     leastConfidence_rank_idx = LeastConfidence_rank_idx(x_test_target_model_pre)
     random_rank_idx = Random_rank_idx(x_test_target_model_pre)
 
+    vanillasoftmax_rank_idx = VanillaSoftmax_rank_idx(x_test_target_model_pre)
+    pcs_rank_idx = PCS_rank_idx(x_test_target_model_pre)
+    entropy_rank_idx = Entropy_rank_idx(x_test_target_model_pre)
+
     dnn_ratio_list = get_res_ratio_list(idx_miss_list, dnn_rank_idx, select_ratio_list)
     lgb_ratio_list = get_res_ratio_list(idx_miss_list, lgb_rank_idx, select_ratio_list)
+    xgb_ratio_list = get_res_ratio_list(idx_miss_list, xgb_rank_idx, select_ratio_list)
     rf_ratio_list = get_res_ratio_list(idx_miss_list, rf_rank_idx, select_ratio_list)
     lr_ratio_list = get_res_ratio_list(idx_miss_list, lr_rank_idx, select_ratio_list)
     mutation_ratio_list = get_res_ratio_list(idx_miss_list, mutation_rank_idx, select_ratio_list)
@@ -165,8 +178,14 @@ def main():
     leastConfidence_ratio_list = get_res_ratio_list(idx_miss_list, leastConfidence_rank_idx, select_ratio_list)
     random_ratio_list = get_res_ratio_list(idx_miss_list, random_rank_idx, select_ratio_list)
 
+    vanillasoftmax_ratio_list = get_res_ratio_list(idx_miss_list, vanillasoftmax_rank_idx, select_ratio_list)
+    pcs_ratio_list = get_res_ratio_list(idx_miss_list, pcs_rank_idx, select_ratio_list)
+    entropy_ratio_list = get_res_ratio_list(idx_miss_list, entropy_rank_idx, select_ratio_list)
+
+
     dnn_ratio_list.insert(0, subject_name+'_'+'dnn')
     lgb_ratio_list.insert(0, subject_name+'_'+'lgb')
+    xgb_ratio_list.insert(0, subject_name + '_' + 'xgb')
     rf_ratio_list.insert(0, subject_name+'_'+'rf')
     lr_ratio_list.insert(0, subject_name+'_'+'lr')
     mutation_ratio_list.insert(0, subject_name+'_'+'mutation')
@@ -175,17 +194,23 @@ def main():
     leastConfidence_ratio_list.insert(0, subject_name+'_'+'leastConfidence')
     random_ratio_list.insert(0, subject_name+'_'+'random')
 
-    res_list = [dnn_ratio_list, lgb_ratio_list, rf_ratio_list, lr_ratio_list, mutation_ratio_list, margin_ratio_list, deepGini_ratio_list, leastConfidence_ratio_list, random_ratio_list]
+    vanillasoftmax_ratio_list.insert(0, subject_name + '_' + 'vanillasoftmax')
+    pcs_ratio_list.insert(0, subject_name + '_' + 'pcs')
+    entropy_ratio_list.insert(0, subject_name + '_' + 'entropy')
+
+    res_list = [dnn_ratio_list, lgb_ratio_list, xgb_ratio_list, rf_ratio_list, lr_ratio_list, mutation_ratio_list, margin_ratio_list, deepGini_ratio_list, leastConfidence_ratio_list, random_ratio_list,
+                vanillasoftmax_ratio_list, pcs_ratio_list, entropy_ratio_list]
     df = pd.DataFrame(columns=None, data=res_list)
     print(df)
     df.to_csv(path_result, mode='a', header=False, index=False)
 
     dnn_pre_list.insert(0, subject_name+'_'+'dnn')
     lgb_pre_list.insert(0, subject_name+'_'+'lgb')
+    xgb_pre_list.insert(0, subject_name + '_' + 'xgb')
     rf_pre_list.insert(0, subject_name+'_'+'rf')
     lr_pre_list.insert(0, subject_name+'_'+'lr')
 
-    res_list_pre = [dnn_pre_list, lgb_pre_list, rf_pre_list, lr_pre_list]
+    res_list_pre = [dnn_pre_list, lgb_pre_list, xgb_pre_list, rf_pre_list, lr_pre_list]
     df_pre = pd.DataFrame(columns=None, data=res_list_pre)
     print(df_pre)
     df_pre.to_csv(path_pre_result, mode='a', header=False, index=False)

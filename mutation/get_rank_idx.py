@@ -56,6 +56,7 @@ def PCS_rank_idx(x):
 
 
 def Entropy_rank_idx(x):
+    x = np.array([i / sum(i) for i in x])
     log_probs = np.log2(x)
     entropy = -1 * np.sum(x * log_probs, axis=1)
     entropy_rank_idx = np.argsort(entropy)[::-1]

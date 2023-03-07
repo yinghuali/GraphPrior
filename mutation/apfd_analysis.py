@@ -53,9 +53,10 @@ target_hidden_channel = 16
 
 df_pre = pd.read_csv(path_pre_result, header=None)
 lr_pre_test = df_pre[df_pre[0] == subject_name+'_lr'].to_numpy()[0][1:]
-rf_pre_test= df_pre[df_pre[0] == subject_name+'_rf'].to_numpy()[0][1:]
-lgb_pre_test= df_pre[df_pre[0] == subject_name+'_lgb'].to_numpy()[0][1:]
+rf_pre_test = df_pre[df_pre[0] == subject_name+'_rf'].to_numpy()[0][1:]
+lgb_pre_test = df_pre[df_pre[0] == subject_name+'_lgb'].to_numpy()[0][1:]
 dnn_pre_test = df_pre[df_pre[0] == subject_name+'_dnn'].to_numpy()[0][1:]
+xgb_pre_test = df_pre[df_pre[0] == subject_name+'_xgb'].to_numpy()[0][1:]
 
 
 num_node_features, num_classes, x, edge_index, y, test_y, train_idx, test_idx = load_data(path_x_np, path_edge_index, path_y)
@@ -100,35 +101,50 @@ if __name__ == '__main__':
     leastConfidence_rank_idx = LeastConfidence_rank_idx(x_test_target_model_pre)
     random_rank_idx = Random_rank_idx(x_test_target_model_pre)
 
+    vanillasoftmax_rank_idx = VanillaSoftmax_rank_idx(x_test_target_model_pre)
+    pcs_rank_idx = PCS_rank_idx(x_test_target_model_pre)
+    entropy_rank_idx = Entropy_rank_idx(x_test_target_model_pre)
+
     lr_rank_idx = lr_pre_test.argsort()[::-1].copy()
     rf_rank_idx = rf_pre_test.argsort()[::-1].copy()
     lgb_rank_idx = lgb_pre_test.argsort()[::-1].copy()
     dnn_rank_idx = dnn_pre_test.argsort()[::-1].copy()
+    xgb_rank_idx = xgb_pre_test.argsort()[::-1].copy()
 
     dnn_apfd = apfd(idx_miss_list, dnn_rank_idx)
     mutation_apfd = apfd(idx_miss_list, mutation_rank_idx)
     lgb_apfd = apfd(idx_miss_list, lgb_rank_idx)
     lr_apfd = apfd(idx_miss_list, lr_rank_idx)
     rf_apfd = apfd(idx_miss_list, rf_rank_idx)
+    xgb_apfd = apfd(idx_miss_list, xgb_rank_idx)
+
     deepGini_apfd = apfd(idx_miss_list, deepGini_rank_idx)
     leastConfidence_apfd = apfd(idx_miss_list, leastConfidence_rank_idx)
     margin_apfd = apfd(idx_miss_list, margin_rank_idx)
     random_apfd = apfd(idx_miss_list, random_rank_idx)
+
+    vanillasoftmax_apfd = apfd(idx_miss_list, vanillasoftmax_rank_idx)
+    pcs_apfd = apfd(idx_miss_list, pcs_rank_idx)
+    entropy_apfd = apfd(idx_miss_list, entropy_rank_idx)
 
     df_apfd = pd.DataFrame(columns=['name'])
     df_apfd['name'] = [subject_name]
     df_apfd['dnn_apfd'] = [dnn_apfd]
     df_apfd['mutation_apfd'] = [mutation_apfd]
     df_apfd['lgb_apfd'] = [lgb_apfd]
+    df_apfd['xgb_apfd'] = [xgb_apfd]
     df_apfd['lr_apfd'] = [lr_apfd]
     df_apfd['rf_apfd'] = [rf_apfd]
     df_apfd['deepGini_apfd'] = [deepGini_apfd]
     df_apfd['leastConfidence_apfd'] = [leastConfidence_apfd]
     df_apfd['margin_apfd'] = [margin_apfd]
     df_apfd['random_apfd'] = [random_apfd]
-    print(df_apfd)
 
-    df_apfd.to_csv('res/apfd.csv', mode='a', header=False, index=False)
+    df_apfd['vanillasoftmax_apfd'] = [vanillasoftmax_apfd]
+    df_apfd['pcs_apfd'] = [pcs_apfd]
+    df_apfd['entropy_apfd'] = [entropy_apfd]
+
+    df_apfd.to_csv('res/repeat_apfd.csv', mode='a', header=False, index=False)
 
 
 
