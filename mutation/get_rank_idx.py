@@ -2,6 +2,7 @@ import numpy as np
 import random
 from scipy.special import softmax
 from utils import *
+from scipy.stats import entropy
 
 
 def get_0_1_pro(pre_np):
@@ -56,8 +57,7 @@ def PCS_rank_idx(x):
 
 
 def Entropy_rank_idx(x):
-    x = np.array([i / sum(i) for i in x])
-    log_probs = np.log2(x)
-    entropy = -1 * np.sum(x * log_probs, axis=1)
-    entropy_rank_idx = np.argsort(entropy)[::-1]
+    prob_dist = np.array([i / np.sum(i) for i in x])
+    entropy_res = entropy(prob_dist, axis=1)
+    entropy_rank_idx = np.argsort(entropy_res)[::-1]
     return entropy_rank_idx
