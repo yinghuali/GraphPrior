@@ -179,7 +179,6 @@ def main():
     pcs_ratio_list = get_res_ratio_list(idx_miss_list, pcs_rank_idx, select_ratio_list)
     entropy_ratio_list = get_res_ratio_list(idx_miss_list, entropy_rank_idx, select_ratio_list)
 
-
     dnn_ratio_list.insert(0, subject_name+'_'+'dnn')
     lgb_ratio_list.insert(0, subject_name+'_'+'lgb')
     xgb_ratio_list.insert(0, subject_name + '_' + 'xgb')

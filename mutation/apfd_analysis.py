@@ -52,11 +52,12 @@ path_pre_result = args.path_pre_result
 target_hidden_channel = 16
 
 df_pre = pd.read_csv(path_pre_result, header=None)
-lr_pre_test = df_pre[df_pre[0] == subject_name+'_lr'].to_numpy()[0][1:]
-rf_pre_test = df_pre[df_pre[0] == subject_name+'_rf'].to_numpy()[0][1:]
-lgb_pre_test = df_pre[df_pre[0] == subject_name+'_lgb'].to_numpy()[0][1:]
-dnn_pre_test = df_pre[df_pre[0] == subject_name+'_dnn'].to_numpy()[0][1:]
-xgb_pre_test = df_pre[df_pre[0] == subject_name+'_xgb'].to_numpy()[0][1:]
+
+lr_pre_test = df_pre[df_pre[0] == subject_name.split('_')[0]+'_'+subject_name.split('_')[1]+'_clean_lr'].to_numpy()[0][1:]
+rf_pre_test = df_pre[df_pre[0] == subject_name.split('_')[0]+'_'+subject_name.split('_')[1]+'_clean_rf'].to_numpy()[0][1:]
+lgb_pre_test = df_pre[df_pre[0] == subject_name.split('_')[0]+'_'+subject_name.split('_')[1]+'_clean_lgb'].to_numpy()[0][1:]
+dnn_pre_test = df_pre[df_pre[0] == subject_name.split('_')[0]+'_'+subject_name.split('_')[1]+'_clean_dnn'].to_numpy()[0][1:]
+xgb_pre_test = df_pre[df_pre[0] == subject_name.split('_')[0]+'_'+subject_name.split('_')[1]+'_clean_xgb'].to_numpy()[0][1:]
 
 
 num_node_features, num_classes, x, edge_index, y, test_y, train_idx, test_idx = load_data(path_x_np, path_edge_index, path_y)
