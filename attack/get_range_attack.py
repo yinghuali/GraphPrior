@@ -21,8 +21,9 @@ path_y = args.path_y
 save_edge_index = args.save_edge_index
 
 
-# python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/home/users/yili/pycharm/GraphPrior/data/ratio_attack/cora/cora'
-
+# python get_range_attack.py --path_x_np '../data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y '../data/cora/y_np.pkl' --save_edge_index '/mnt/irisgpfs/users/yili/pycharm/GraphPrior/data/ratio_attack/cora/cora'
+# python get_range_attack.py --path_x_np '../data/citeseer/x_np.pkl' --path_edge_index '../data/citeseer/edge_index_np.pkl' --path_y '../data/citeseer/y_np.pkl' --save_edge_index '/mnt/irisgpfs/users/yili/pycharm/GraphPrior/data/ratio_attack/citeseer/citeseer'
+# python get_range_attack.py --path_x_np '../data/lastfm/x_np.pkl' --path_edge_index '../data/lastfm/edge_index_np.pkl' --path_y '../data/lastfm/y_np.pkl' --save_edge_index '/mnt/irisgpfs/users/yili/pycharm/GraphPrior/data/ratio_attack/lastfm/lastfm'
 
 def load_data(path_x_np, path_edge_index, path_y):
 
@@ -105,9 +106,29 @@ def get_randomattack_flip(labels, adj, save_edge_index, perturbations_ratio):
     pickle.dump(edge_index, open(save_edge_index+'_randomattack_flip.pkl', 'wb'), protocol=4)
 
 
+def get_nodeembeddingattack_add(labels, adj, save_edge_index, perturbations_ratio):
+    model = NodeEmbeddingAttack()
+    adj_csr_matrix = sparse.csr_matrix(adj)
+    model.attack(adj_csr_matrix, attack_type="add", n_perturbations=int(len(labels)*perturbations_ratio), n_candidates=10000)
+    modified_adj = model.modified_adj
+    modified_adj = modified_adj.A
+    edge_index = adj_to_edge_index(modified_adj)
+    pickle.dump(edge_index, open(save_edge_index+'_nodeembeddingattack_add.pkl', 'wb'), protocol=4)
+
+
+def get_nodeembeddingattack_remove(labels, adj, save_edge_index, perturbations_ratio):
+    model = NodeEmbeddingAttack()
+    adj_csr_matrix = sparse.csr_matrix(adj)
+    model.attack(adj_csr_matrix, attack_type="add_by_remove", n_perturbations=int(len(labels)*perturbations_ratio), n_candidates=10000)
+    modified_adj = model.modified_adj
+    modified_adj = modified_adj.A
+    edge_index = adj_to_edge_index(modified_adj)
+    pickle.dump(edge_index, open(save_edge_index+'_nodeembeddingattack_remove.pkl', 'wb'), protocol=4)
+
+
 
 def main():
-    n_perturbations_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+    n_perturbations_list = [0.1, 0.2, 0.3, 0.4]
 
     features, labels, adj, idx_train, idx_test, idx_val, idx_unlabeled = load_data(path_x_np, path_edge_index, path_y)
 
@@ -115,13 +136,19 @@ def main():
                     nhid=16, dropout=0, with_relu=False, with_bias=False, device='cuda').to('cuda')
     surrogate.fit(features, adj, labels, idx_train, patience=30)
 
-    for ratio in n_perturbations_list:
+    for ratio in [0.3, 0.4]:
         # get_dice(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
         # get_minmax(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index+'_'+str(ratio)+'_', ratio)
-        get_randomattack_add(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
-        get_randomattack_remove(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
-        get_randomattack_flip(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
         # get_pgdattack(surrogate, features, labels, adj, idx_train, idx_unlabeled, save_edge_index+'_'+str(ratio)+'_', ratio)
+        # get_randomattack_add(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
+        # get_randomattack_remove(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
+        # get_randomattack_flip(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
+        get_nodeembeddingattack_add(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
+        print('=================1============')
+        get_nodeembeddingattack_remove(labels, adj, save_edge_index+'_'+str(ratio)+'_', ratio)
+        print('=================2============')
+        print('=====finished=====')
+
 
 
 if __name__ == '__main__':
