@@ -155,6 +155,9 @@ README.txt
 ResultAnalysis.ipynb
 mutation/all_mutation_models/*
 mutation/repeat_models/*
+RepeatResultAnalysis.ipynb
+retrain/res/*
 
-
+mutation/res/*
+time_res.xlsx
 
