@@ -3,35 +3,26 @@ import pickle
 import pickle
 import numpy as np
 import torch
+import argparse
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-path_x_np = '../data/citeseer/x_np.pkl'
-path_edge_index = '../data/citeseer/edge_index_np.pkl'
-path_y = '../data/citeseer/y_np.pkl'
-epochs = 10
-save_model_name = '../target_models/citeseer_gat.pt'
-save_pre_name = '../target_models/pre_np_citeseer_gat.pkl'
+ap = argparse.ArgumentParser()
+ap.add_argument("--path_x_np", type=str)
+ap.add_argument("--path_edge_index", type=str)
+ap.add_argument("--path_y", type=str)
+ap.add_argument("--epochs", type=int)
+ap.add_argument("--save_model_name", type=str)
+ap.add_argument("--save_pre_name", type=str)
 
-# python citeseer_gat_train.py --path_x_np '../data/citeseer/x_np.pkl'  --path_edge_index '../data/citeseer/edge_index_np.pkl' --path_y '../data/citeseer/y_np.pkl' --epochs 10 --save_model_name '../mutation/repeat_models/repeat_1/citeseer_gat.pt' --save_pre_name '../mutation/repeat_models/repeat_1/pre_np_citeseer_gat.pkl'
-
-# import argparse
-# ap = argparse.ArgumentParser()
-# ap.add_argument("--path_x_np", type=str)
-# ap.add_argument("--path_edge_index", type=str)
-# ap.add_argument("--path_y", type=str)
-# ap.add_argument("--epochs", type=int)
-# ap.add_argument("--save_model_name", type=str)
-# ap.add_argument("--save_pre_name", type=str)
-
-# args = ap.parse_args()
-# path_x_np = args.path_x_np
-# path_edge_index = args.path_edge_index
-# path_y = args.path_y
-# epochs = args.epochs
-# save_model_name = args.save_model_name
-# save_pre_name = args.save_pre_name
+args = ap.parse_args()
+path_x_np = args.path_x_np
+path_edge_index = args.path_edge_index
+path_y = args.path_y
+epochs = args.epochs
+save_model_name = args.save_model_name
+save_pre_name = args.save_pre_name
 
 
 x = pickle.load(open(path_x_np, 'rb'))

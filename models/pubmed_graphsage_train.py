@@ -3,18 +3,11 @@ import pickle
 import pickle
 import numpy as np
 import torch
+import argparse
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from sklearn.model_selection import train_test_split
 
-# path_x_np = '../data/pubmed/x_np.pkl'
-# path_edge_index = '../data/pubmed/edge_index_np.pkl'
-# path_y = '../data/pubmed/y_np.pkl'
-# epochs = 50
-# save_model_name = 'pubmed_graphsage.pt'
-# save_pre_name = 'pre_np_pubmed_graphsage.pkl'
-
-import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("--path_x_np", type=str)
 ap.add_argument("--path_edge_index", type=str)
