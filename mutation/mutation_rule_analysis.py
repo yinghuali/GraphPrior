@@ -22,18 +22,7 @@ path_edge_index = args.path_edge_index
 path_y = args.path_y
 data_name = args.data_name
 data_name = data_name+'_'+model_name
-
-# path_model_file = './mutation_models/cora_gcn'
-# model_name = 'gcn'
-# target_model_path = './target_models/cora_gcn.pt'
-# path_x_np = './data/cora/x_np.pkl'
-# path_edge_index = '../data/attack_data/cora/cora_dice.pkl'
-# path_y = './data/cora/y_np.pkl'
-# data_name = 'cora'
-
 target_hidden_channel = 16
-
-# python mutation_rule_analysis.py --path_model_file './mutation_models/cora_gcn' --model_name 'gcn' --target_model_path './target_models/cora_gcn.pt' --path_x_np './data/cora/x_np.pkl' --path_edge_index '../data/cora/edge_index_np.pkl' --path_y './data/cora/y_np.pkl' --data_name 'cora'
 
 
 def main():

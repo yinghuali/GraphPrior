@@ -10,16 +10,14 @@ from dnn import DNN, get_acc
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn import metrics
-
 import argparse
+
 ap = argparse.ArgumentParser()
 ap.add_argument("--path_model_file", type=str)
 ap.add_argument("--model_name", type=str)
 ap.add_argument("--target_model_path", type=str)
 ap.add_argument("--path_x_np", type=str)
 ap.add_argument("--path_edge_index", type=str)
-
 ap.add_argument("--path_y", type=str)
 ap.add_argument("--subject_name", type=str)
 ap.add_argument("--path_result", type=str)
@@ -35,18 +33,6 @@ path_y = args.path_y
 subject_name = args.subject_name
 path_result = args.path_result
 path_pre_result = args.path_pre_result
-
-# python mutation_feature_model_train.py --path_model_file './mutation_models/cora_gcn' --model_name 'gcn' --target_model_path './target_models/cora_gcn.pt' --path_x_np './data/cora/x_np.pkl' --path_edge_index '../data/attack_data/cora/cora_dice.pkl' --path_y './data/cora/y_np.pkl' --subject_name 'cora_gcn_dice' --path_result 'res/res_misclassification_models_cora.csv' --path_pre_result 'res/pre_res_misclassification_models_cora.csv'
-
-# path_model_file = './mutation_models/cora_gcn'
-# model_name = 'gcn'
-# target_model_path = './target_models/cora_gcn.pt'
-# path_x_np = './data/cora/x_np.pkl'
-# path_edge_index = '../data/attack_data/cora/cora_dice.pkl'
-# path_y = './data/cora/y_np.pkl'
-# subject_name = 'cora_gcn_dice'
-# path_result = 'res/res_misclassification_models_cora.csv'
-# path_pre_result = 'res/pre_res_misclassification_models_cora.csv'
 target_hidden_channel = 16
 
 num_node_features, num_classes, x, edge_index, y, test_y, train_idx, test_idx = load_data(path_x_np, path_edge_index, path_y)

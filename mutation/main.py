@@ -1,8 +1,8 @@
 from get_rank_idx import *
 from utils import *
 from config import *
-
 import argparse
+
 ap = argparse.ArgumentParser()
 ap.add_argument("--path_model_file", type=str)
 ap.add_argument("--model_name", type=str)
@@ -20,17 +20,6 @@ path_x_np = args.path_x_np
 path_edge_index = args.path_edge_index
 path_y = args.path_y
 target_hidden_channel = 16
-
-# python main.py --path_model_file './mutation_models/cora_tagcn' --model_name './mutation_models/cora_tagcn' --model_name 'tagcn' --target_model_path './target_models/cora_tagcn.pt' --path_x_np './data/cora/x_np.pkl' --path_edge_index '../data/attack_data/cora/cora_dice.pkl' --path_y './data/cora/y_np.pkl'
-
-# path_model_file = './mutation_models/cora_gcn'
-# model_name = 'gcn'
-# target_model_path = './target_models/cora_gcn.pt'
-#
-# path_x_np = './data/cora/x_np.pkl'
-# path_edge_index = '../data/attack_data/cora/cora_dice.pkl'
-# path_y = './data/cora/y_np.pkl'
-
 
 
 def main():
