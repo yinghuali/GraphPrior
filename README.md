@@ -6,13 +6,18 @@
 - LighGBM 3.3.2
 - PyTorch Geometric 2.1.0
 ## Reference
-If our project is helpful to you, please cite our paper.
+If our project is helpful to you, please consider citing our paper.
 ```
 @article{dang2023graphprior,
   title={GraphPrior: Mutation-based Test Input Prioritization for Graph Neural Networks},
   author={Dang, Xueqi and Li, Yinghua and Papadakis, Mike and Klein, Jacques and Bissyand{\'e}, Tegawend{\'e} F and Traon, Yves LE},
   journal={ACM Transactions on Software Engineering and Methodology},
   year={2023},
-  publisher={ACM New York, NY}
+  publisher={ACM New York, NY},
+  volume={33},
+  number={1},
+  articleno={22},
+  numpages={40},
+  doi={10.1145/3607191},
 }
 ```
